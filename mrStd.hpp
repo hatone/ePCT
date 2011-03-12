@@ -1,7 +1,7 @@
-/*! \file  mrStd.hpp
- *  \brief ©•ª‚Åì‚Á‚½ŠÖ”
+ï»¿/*! \file  mrStd.hpp
+ *  \brief è‡ªåˆ†ã§ä½œã£ãŸé–¢æ•°
  *
- *  Visual Studio 2010 ‚Å“®‚­‚Í‚¸
+ *  Visual Studio 2010 ã§å‹•ãã¯ãš
  */
 #ifndef _MRSTD_HPP_
 #define _MRSTD_HPP_
@@ -38,8 +38,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec2i sum(Vec2i v)
     {
@@ -47,8 +47,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec2i prod(int n)
     {
@@ -78,8 +78,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec3i sum(Vec3i v)
     {
@@ -87,8 +87,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec3i prod(int n)
     {
@@ -116,8 +116,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec2f sum(Vec2f v)
     {
@@ -125,8 +125,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec2f prod(float n)
     {
@@ -134,7 +134,7 @@ public:
     }
 
     /*!
-     *  \brief ³‹K‰»
+     *  \brief æ­£è¦åŒ–
      */
     inline void normalize()
     {
@@ -174,8 +174,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec3f sum(Vec3f v)
     {
@@ -183,8 +183,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec3f prod(float n)
     {
@@ -192,7 +192,7 @@ public:
     }
 
     /*!
-     *  \brief ³‹K‰»
+     *  \brief æ­£è¦åŒ–
      */
     inline void normalize()
     {
@@ -231,8 +231,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec2d sum(Vec2d v)
     {
@@ -240,8 +240,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec2d prod(double n)
     {
@@ -249,7 +249,7 @@ public:
     }
 
     /*!
-     *  \brief ³‹K‰»
+     *  \brief æ­£è¦åŒ–
      */
     inline void normalize()
     {
@@ -289,8 +289,8 @@ public:
     }
 
     /*!
-     *  \brief ˜a
-     *  \param n ‘«‚·”
+     *  \brief å’Œ
+     *  \param n è¶³ã™æ•°
      */
     inline Vec3d sum(Vec3d v)
     {
@@ -298,8 +298,8 @@ public:
     }
 
     /*!
-     *  \brief Ï
-     *  \param n Š|‚¯‚é”
+     *  \brief ç©
+     *  \param n æ›ã‘ã‚‹æ•°
      */
     inline Vec3d prod(double n)
     {
@@ -307,7 +307,7 @@ public:
     }
 
     /*!
-     *  \brief ³‹K‰»
+     *  \brief æ­£è¦åŒ–
      */
     inline void normalize()
     {
@@ -328,53 +328,53 @@ public:
 
 
 /*! \namespace mrMath
- *  \brief     ”Šw‚ÉŠÖ‚·‚é“¹‹ï
+ *  \brief     æ•°å­¦ã«é–¢ã™ã‚‹é“å…·
  */
 namespace mrMath
 {
-    // ’è”
-    const double M_PI_DBL      = 3.14159265358979323846; //!< ‰~ü—¦
-    const float  M_PI_FLT      = 3.141592654f;           //!< ‰~ü—¦
-    const float  M_PI_FLT_45   = 0.785398163f;           //!< ‰~ü—¦‚Ì 1/4
-    const float  M_PI_FLT_90   = 1.570796371f;           //!< ‰~ü—¦‚Ì 1/2
-    const float  M_PI_FLT_270  = 4.712388992f;           //!< ‰~ü—¦‚Ì 3/2
+    // å®šæ•°
+    const double M_PI_DBL      = 3.14159265358979323846; //!< å††å‘¨ç‡
+    const float  M_PI_FLT      = 3.141592654f;           //!< å††å‘¨ç‡
+    const float  M_PI_FLT_45   = 0.785398163f;           //!< å††å‘¨ç‡ã® 1/4
+    const float  M_PI_FLT_90   = 1.570796371f;           //!< å††å‘¨ç‡ã® 1/2
+    const float  M_PI_FLT_270  = 4.712388992f;           //!< å††å‘¨ç‡ã® 3/2
 
     class omniNotation
     {
-        std::vector<int> m_num; //!< ’l
+        std::vector<int> m_num; //!< å€¤
 
     public:
-        /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         omniNotation();
-        /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         omniNotation(std::string num);
-        /// ƒfƒXƒgƒ‰ƒNƒ^
+        /// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         ~omniNotation();
 
-        /// ’l‚ğo—Í‚·‚é
+        /// å€¤ã‚’å‡ºåŠ›ã™ã‚‹
         std::string show();
         
-        /// ‰ÁZ
+        /// åŠ ç®—
         void add(std::string num);
-        /// æZ
+        /// ä¹—ç®—
         void multi(std::string num);
     };
 
     /*!
-     *  \brief 0.5 ‚Í‹ô”‘¤‚ÉŠÛ‚ß‚élÌŒÜ“ü
-     *  \param n ŠÛ‚ß‚é’l
-     *  \return  ŠÛ‚ß‚½’l
+     *  \brief 0.5 ã¯å¶æ•°å´ã«ä¸¸ã‚ã‚‹å››æ¨äº”å…¥
+     *  \param n ä¸¸ã‚ã‚‹å€¤
+     *  \return  ä¸¸ã‚ãŸå€¤
      */
     template <typename T> inline int round(T n)
     {
-	    int in = static_cast<int>(floor(n));      // ®”•”•ª
-	    int dn = static_cast<int>(((n-in) * 10)); // ¬”•”•ª
+	    int in = static_cast<int>(floor(n));      // æ•´æ•°éƒ¨åˆ†
+	    int dn = static_cast<int>(((n-in) * 10)); // å°æ•°éƒ¨åˆ†
 
-	    if(dn > 5) // ¬”“_‘æˆêˆÊ‚ª6ˆÈã
+	    if(dn > 5) // å°æ•°ç‚¹ç¬¬ä¸€ä½ãŒ6ä»¥ä¸Š
 	    {
 		    in += 1;
 	    }
-	    else if(dn == 5 && in%2 == 1)	//	¬”“_‘æˆêˆÊ‚ª5‚ÅŠï”
+	    else if(dn == 5 && in%2 == 1)	//	å°æ•°ç‚¹ç¬¬ä¸€ä½ãŒ5ã§å¥‡æ•°
 	    {
 		    in += 1;
 	    }
@@ -383,10 +383,10 @@ namespace mrMath
     }
 
     /*!
-     *  \brief  ‡Œv‚ğ‹‚ß‚é
-     *  \param &v_data “ü—Í
+     *  \brief  åˆè¨ˆã‚’æ±‚ã‚ã‚‹
+     *  \param &v_data å…¥åŠ›
      *
-     *  \return ‡Œv
+     *  \return åˆè¨ˆ
      */
     template <typename T> inline T summation(std::vector<T> &v_data)
     {
@@ -400,10 +400,10 @@ namespace mrMath
     }
 
     /*!
-     *  \brief  Ï‚ğ‹‚ß‚é
-     *  \param &v_data “ü—Í
+     *  \brief  ç©ã‚’æ±‚ã‚ã‚‹
+     *  \param &v_data å…¥åŠ›
      *
-     *  \return ‡Œv
+     *  \return åˆè¨ˆ
      */
     template <typename T> inline T multiplication(std::vector<T> &v_data)
     {
@@ -417,10 +417,10 @@ namespace mrMath
     }
 
     /*!
-     *  \brief  •½‹Ï‚ğ‹‚ß‚é
-     *  \param &v_data “ü—Íƒf[ƒ^
+     *  \brief  å¹³å‡ã‚’æ±‚ã‚ã‚‹
+     *  \param &v_data å…¥åŠ›ãƒ‡ãƒ¼ã‚¿
      *  
-     *  \return •½‹Ï
+     *  \return å¹³å‡
      */
     template <typename T> inline double average(std::vector<T> &v_data)
     {
@@ -428,14 +428,14 @@ namespace mrMath
     }
 
     /*!
-     *  \brief  •ªU‚ğ‹‚ß‚é
-     *  \param &v_data “ü—Íƒf[ƒ^
+     *  \brief  åˆ†æ•£ã‚’æ±‚ã‚ã‚‹
+     *  \param &v_data å…¥åŠ›ãƒ‡ãƒ¼ã‚¿
      *  
-     *  \return •ªU
+     *  \return åˆ†æ•£
      */
     template <typename T> inline double variance(std::vector<T> &v_data)
     {
-        std::vector<T> v_pow; // “ñæ‚Ì•½‹Ï
+        std::vector<T> v_pow; // äºŒä¹—ã®å¹³å‡
         for (std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
         {
             v_pow.push_back(*it**it);
@@ -445,12 +445,12 @@ namespace mrMath
     }
 
     /*!
-     *  \brief  ƒVƒOƒ‚ƒCƒhŠÖ”
+     *  \brief  ã‚·ã‚°ãƒ¢ã‚¤ãƒ‰é–¢æ•°
      *
      *  f(x) = 1 / (1+\\exp(-x))
-     *  \param  x           ˆø”
-     *  \param  temperature ‰e‹¿‚Ì‘å‚«‚³
-     *  \return ŒvZŒ‹‰Ê
+     *  \param  x           å¼•æ•°
+     *  \param  temperature å½±éŸ¿ã®å¤§ãã•
+     *  \return è¨ˆç®—çµæœ
      */
     template <typename T> inline T sigmoid(T x, double temperature = 1.0)
     {
@@ -458,9 +458,9 @@ namespace mrMath
     }
 
     /*!
-     * \brief  Degree ‚ğ Radian ‚É•ÏŠ·
-     * \param  d Degree ‚Ì’l
-     * \return Radian ‚Ì’l
+     * \brief  Degree ã‚’ Radian ã«å¤‰æ›
+     * \param  d Degree ã®å€¤
+     * \return Radian ã®å€¤
      */
     template<typename T> T inline deg2rad(T d)
     {
@@ -468,21 +468,21 @@ namespace mrMath
     }
 
     /*!
-     * \brief  Radian ‚ğ Degree ‚É•ÏŠ·
-     * \param  r Radian ‚Ì’l
-     * \return Degree ‚Ì’l
+     * \brief  Radian ã‚’ Degree ã«å¤‰æ›
+     * \param  r Radian ã®å€¤
+     * \return Degree ã®å€¤
      */
     template<typename T> T inline rad2deg(T r) {
         return r / M_PI_DBL * 180.0;
     }
 
-    /// ‘fˆö”•ª‰ğ
+    /// ç´ å› æ•°åˆ†è§£
     void primeFactorization(unsigned int n, std::vector<int> &primeTable);
 
-    /// –ñ”‚ğ‹‚ß‚é
+    /// ç´„æ•°ã‚’æ±‚ã‚ã‚‹
     void divisor(unsigned int n, std::vector<int> &divTable);
 
-    /// ŠKæ‚ğ‹‚ß‚é
+    /// éšä¹—ã‚’æ±‚ã‚ã‚‹
     inline long long factorial(int n)
     {
         long long r = 1;
@@ -494,14 +494,14 @@ namespace mrMath
         return r;
     }
 
-    /// ‘g‡‚¹‚Ì”‚ğ‹‚ß‚é
+    /// çµ„åˆã›ã®æ•°ã‚’æ±‚ã‚ã‚‹
     long long combination(int n, int r);
 
     /*!
-     *  \brief “àÏ‚ğ‹‚ß‚é
-     *  \param  l ¶‚Ì€
-     *  \param  r ‰E‚Ì€
-     *  \return “àÏ
+     *  \brief å†…ç©ã‚’æ±‚ã‚ã‚‹
+     *  \param  l å·¦ã®é …
+     *  \param  r å³ã®é …
+     *  \return å†…ç©
      */
     inline int innerProd(Vec3i &l, Vec3i &r)
     {
@@ -509,10 +509,10 @@ namespace mrMath
     }
 
     /*!
-     *  \brief ŠOÏ‚ğ‹‚ß‚é
-     *  \param[in]  l ¶‚Ì€
-     *  \param[in]  r ‰E‚Ì€
-     *  \param[out] a ŠOÏ
+     *  \brief å¤–ç©ã‚’æ±‚ã‚ã‚‹
+     *  \param[in]  l å·¦ã®é …
+     *  \param[in]  r å³ã®é …
+     *  \param[out] a å¤–ç©
      */
     inline void outerProd(Vec3i &l, Vec3i &r, Vec3i &a)
     {
@@ -521,40 +521,40 @@ namespace mrMath
         a.z = l.x*r.y - l.y*r.x;
     }
 
-    /// ”CˆÓ²‰ñ‚è‚ÌÀ•W•ÏŠ·
+    /// ä»»æ„è»¸å›ã‚Šã®åº§æ¨™å¤‰æ›
     void quatRot(Vec3d src, Vec3d axis, double theta, Vec3d &dst);
 
 }   // end of namespace mrMath
 
 /*!
  *  \namespace mrString
- *  \brief     •¶š—ñ‚ÉŠÖ‚·‚é“¹‹ï
+ *  \brief     æ–‡å­—åˆ—ã«é–¢ã™ã‚‹é“å…·
  */
 namespace mrString
 {
-    /// ƒ‰ƒ“ƒ_ƒ€•¶š—ñ‚ğ¶¬‚·‚é
+    /// ãƒ©ãƒ³ãƒ€ãƒ æ–‡å­—åˆ—ã‚’ç”Ÿæˆã™ã‚‹
     void randamString(int length, std::string &rands);
 
-    /// •¶š—ñ‚ğ•ªŠ„‚µ‚ÄCstring ‚Ì std::vector ‚É‘ã“ü‚·‚é
+    /// æ–‡å­—åˆ—ã‚’åˆ†å‰²ã—ã¦ï¼Œstring ã® std::vector ã«ä»£å…¥ã™ã‚‹
     void split(char *token, const char *delimit, std::vector <std::string> &v);
 
-    /// •¶š—ñ‚ğ•ªŠ„‚µ‚ÄCstring ‚Ì std::vector ‚É‘ã“ü‚·‚é
+    /// æ–‡å­—åˆ—ã‚’åˆ†å‰²ã—ã¦ï¼Œstring ã® std::vector ã«ä»£å…¥ã™ã‚‹
     void split(std::string &token, const char *delimit, std::vector<std::string> &v);
 
 }   // end of namespace mrString
 
 /*!
  *  \namespace mrDebug
- *  \brief     ƒfƒoƒbƒO‚Ég‚¤“¹‹ï
+ *  \brief     ãƒ‡ãƒãƒƒã‚°ã«ä½¿ã†é“å…·
  */
 namespace mrDebug
 {
     /*!
-     *  \brief  std::vector ‚Ì’l‚ğo—Í‚·‚éD
+     *  \brief  std::vector ã®å€¤ã‚’å‡ºåŠ›ã™ã‚‹ï¼
      *
-     *  std::vector ‚Ì’l‚ğ1s‚É1‚Â‚¸‚Âo—Í‚·‚éDŒ^‚Í–â‚í‚È‚¢D<br>
-     *  ‹æØ‚è•¶š‚ğ“±“ü‚µ‚æ‚¤d(¥¥
-     *  \param  v o—Í‚µ‚½‚¢ std::vector
+     *  std::vector ã®å€¤ã‚’1è¡Œã«1ã¤ãšã¤å‡ºåŠ›ã™ã‚‹ï¼å‹ã¯å•ã‚ãªã„ï¼<br>
+     *  åŒºåˆ‡ã‚Šæ–‡å­—ã‚’å°å…¥ã—ã‚ˆã†d(ï½¥ï½¥
+     *  \param  v å‡ºåŠ›ã—ãŸã„ std::vector
      */
     template<typename T> void outputVector(std::vector<T> &v)
     {
@@ -567,17 +567,17 @@ namespace mrDebug
 
 /*!
  *  \namespace mrUtil
- *  \brief     –¢•ª—Ş‚Ì“¹‹ï
+ *  \brief     æœªåˆ†é¡ã®é“å…·
  */
 namespace mrUtil
 {
-    // ƒ}ƒNƒ
-    #define	ArrLen(arr)  (sizeof(arr)/sizeof(arr[0])) //!< ”z—ñ‚Ì’·‚³‚ğ•Ô‚·
+    // ãƒã‚¯ãƒ­
+    #define	ArrLen(arr)  (sizeof(arr)/sizeof(arr[0])) //!< é…åˆ—ã®é•·ã•ã‚’è¿”ã™
 
-    /// std::vector ‚ğ \a val ‚Å‰Šú‰»‚·‚éD
+    /// std::vector ã‚’ \a val ã§åˆæœŸåŒ–ã™ã‚‹ï¼
     template<typename T> void initVector(std::vector<T> &vctr, T val);
 
-    /// ƒXƒy[ƒXi' 'j‚Å‹æØ‚ç‚ê‚½ csv ƒtƒ@ƒCƒ‹‚ğ2ŸŒ³ std::vector ‚É“Ç‚İ‚ŞD
+    /// ã‚¹ãƒšãƒ¼ã‚¹ï¼ˆ' 'ï¼‰ã§åŒºåˆ‡ã‚‰ã‚ŒãŸ csv ãƒ•ã‚¡ã‚¤ãƒ«ã‚’2æ¬¡å…ƒ std::vector ã«èª­ã¿è¾¼ã‚€ï¼
     template<typename T> void csv2matrix(const char *fileName, std::vector<std::vector<T>> &matrix)
     {
         ifstream ifs(fileName);
@@ -601,10 +601,10 @@ namespace mrUtil
     }
 
     /*!
-     *  \brief ƒxƒNƒgƒ‹‚Ì—v‘f‚ğ“ü‚ê‘Ö‚¦‚é
-     *  \param v ƒxƒNƒgƒ‹
-     *  \param i “Yš
-     *  \param j “Yš
+     *  \brief ãƒ™ã‚¯ãƒˆãƒ«ã®è¦ç´ ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
+     *  \param v ãƒ™ã‚¯ãƒˆãƒ«
+     *  \param i æ·»å­—
+     *  \param j æ·»å­—
      */
     template <typename T> inline void swapMember(std::vector<T> &v, int i, int j)
     {
@@ -613,16 +613,16 @@ namespace mrUtil
         v[j]  = tmp;
     }
 
-    /// ‘f”ƒe[ƒuƒ‹‚ğì¬‚·‚é
+    /// ç´ æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã™ã‚‹
     //void makePrimeTable(std::vector<bool> &table);
 
-    /// ‰ñ•¶‚©‚ğ”»’è‚·‚é
+    /// å›æ–‡ã‹ã‚’åˆ¤å®šã™ã‚‹
     bool isPalindrome(std::string str);
 
     /*
-     * \brief 2ŸŒ³ƒxƒNƒgƒ‹‚ğ•\¦‚·‚é
-     * \param matrix 2ŸŒ³ƒxƒNƒgƒ‹
-     * \param format •\¦ƒtƒH[ƒ}ƒbƒg
+     * \brief 2æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+     * \param matrix 2æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«
+     * \param format è¡¨ç¤ºãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
      */
     template<typename T> void showVector(std::vector<std::vector<T> > &matrix, const std::string &format)
     {
@@ -638,9 +638,9 @@ namespace mrUtil
     }
 
     /*
-     * \brief 1ŸŒ³ƒxƒNƒgƒ‹‚ğ•\¦‚·‚é
-     * \param matrix 1ŸŒ³ƒxƒNƒgƒ‹
-     * \param format •\¦ƒtƒH[ƒ}ƒbƒg
+     * \brief 1æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+     * \param matrix 1æ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«
+     * \param format è¡¨ç¤ºãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
      */
     template<typename T> void showVector(std::vector<T> &vec, const std::string &format)
     {
@@ -651,10 +651,10 @@ namespace mrUtil
         std::cout << std::endl;
     }
 
-    /*! \brief  ”z—ñ‚Ì—v‘f‚ğ“ü‚ê‘Ö‚¦‚éD
-     *  \param  arr “ü‚ê‘Ö‚¦‚ğ‚³‚ê‚é”z—ñ
-     *  \param  i “ü‚ê‘Ö‚¦‚é—v‘f‚Ì“Y‚¦š
-     *  \param  j “ü‚ê‘Ö‚¦‚é—v‘f‚Ì“Y‚¦š
+    /*! \brief  é…åˆ—ã®è¦ç´ ã‚’å…¥ã‚Œæ›¿ãˆã‚‹ï¼
+     *  \param  arr å…¥ã‚Œæ›¿ãˆã‚’ã•ã‚Œã‚‹é…åˆ—
+     *  \param  i å…¥ã‚Œæ›¿ãˆã‚‹è¦ç´ ã®æ·»ãˆå­—
+     *  \param  j å…¥ã‚Œæ›¿ãˆã‚‹è¦ç´ ã®æ·»ãˆå­—
      */
     template<typename T> inline void swap(T arr[], T i, T j)
     {
