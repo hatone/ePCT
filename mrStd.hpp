@@ -391,7 +391,7 @@ namespace mrMath
     template <typename T> inline T summation(std::vector<T> &v_data)
     {
         T sum = 0;
-        for (std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
+        for (typename std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
         {
             sum += *it;
         }
@@ -408,7 +408,7 @@ namespace mrMath
     template <typename T> inline T multiplication(std::vector<T> &v_data)
     {
         T mul = 1;
-        for (std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
+        for (typename std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
         {
             mul *= *it;
         }
@@ -436,7 +436,7 @@ namespace mrMath
     template <typename T> inline double variance(std::vector<T> &v_data)
     {
         std::vector<T> v_pow; // 二乗の平均
-        for (std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
+        for (typename std::vector<T>::iterator it = v_data.begin(); it != v_data.end(); it++)
         {
             v_pow.push_back(*it**it);
         }
@@ -558,9 +558,9 @@ namespace mrDebug
      */
     template<typename T> void outputVector(std::vector<T> &v)
     {
-        for (std::vector<T>::iterator it = v.begin(); it != v.end(); it++)
-        {
-            cout << *it << endl;
+        for (typename std::vector<T>::iterator it = v.begin(); it != v.end(); it++){
+			std::cout<<*it<<std::
+			endl;
         }
     }
 }	// end of namespace mrDebug
@@ -578,9 +578,9 @@ namespace mrUtil
     template<typename T> void initVector(std::vector<T> &vctr, T val);
 
     /// スペース（' '）で区切られた csv ファイルを2次元 std::vector に読み込む．
-    template<typename T> void csv2matrix(const char *fileName, std::vector<std::vector<T>> &matrix)
+    template<typename T> void csv2matrix(const char *fileName,std::vector<std::vector<T> > &matrix)
     {
-        ifstream ifs(fileName);
+		std::ifstream ifs(fileName);
 
         while (ifs && !ifs.eof())
         {
@@ -624,11 +624,11 @@ namespace mrUtil
      * \param matrix 2次元ベクトル
      * \param format 表示フォーマット
      */
-    template<typename T> void showVector(std::vector<std::vector<T> > &matrix, const std::string &format)
+	template<typename T> void showVector(std::vector<std::vector<T> > &matrix, const std::string &format)
     {
-        for (std::vector<std::vector<T> >::size_type y = 0; y < matrix.size(); y++)
+        for (typename std::vector<std::vector<T> >::size_type y = 0; y < matrix.size(); y++)
         {
-            for (std::vector<T>::size_type x = 0; x < matrix[y].size(); x++)
+            for (typename std::vector<T>::size_type x = 0; x < matrix[y].size(); x++)
             {
                 printf(format.c_str(), matrix[y][x]);
             }
@@ -644,7 +644,7 @@ namespace mrUtil
      */
     template<typename T> void showVector(std::vector<T> &vec, const std::string &format)
     {
-        for (std::vector<T>::size_type x = 0; x < vec.size(); x++)
+        for (typename std::vector<T>::size_type x = 0; x < vec.size(); x++)
         {
             printf(format.c_str(), vec[x]);
         }
