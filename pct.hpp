@@ -4,8 +4,8 @@
  *  gccで動作確認
  */
 
-//#ifndef _PCT_HPP_
-//#define _PCT_HPP_
+#ifndef _PCT_HPP_
+#define _PCT_HPP_
 
 class Vec4d
 {
@@ -13,48 +13,57 @@ public:
     double x; //!< Vector of x
     double y; //!< Vector of y
     double z; //!< Vector of z
-	double m; //!< Vector of m
-	
-    inline Vec4d(): x(0), y(0), z(0), m(0) {}
+    double m; //!< Vector of m
+    
+    inline Vec4d(): x(0.0), y(0.0), z(0.0), m(0.0) {}
     inline Vec4d(double _x, double _y, double _z, double _m)
     {
         x = _x;
         y = _y;
         z = _z;
-		m = _m;
+        m = _m;
     }
-	
+    
 };
-
-
-
 
 /*!
-    *  \class Cluster
-    *  \brief local coordinate system
-    *  
-    *  It likes structure.
-    */
+ *  \class LoCoord
+ *  \brief nya-
+ *
+ *
+ */
+class LoCoord{
+public:
+    std::vector<Vec3d> m_coordinates;
+};
+
+/*!
+ *  \class GrCoord
+ *  \brief bow
+ *
+ *
+ */
+class GrCoord{
+public:
+    std::vector<Vec4d> m_coordinates;
+};
+
+/*!
+ *  \class Cluster
+ *  \brief local coordinate system
+ *  
+ *  It likes structure.
+ */
 class Cluster
 {
-public:
-	//ローカルの座標系
     Vec3d x;
-	Vec3d y;
-	Vec3d z;
-	
-	//ローカル座標群
-	class LoCoord{
-	public:
-		std::vector<Vec3d> m_coordinates;
-	};
-	
-	//グローバル座標群
-	class GrCoord{
-	public:
-		std::vector<Vec4d> m_coordinates;
-	};
-	
-	//質量重心
-	Vec3d cm;
+    Vec3d y;
+    Vec3d z;
+public:
+    LoCoord L; //!< ローカル座標群
+    GrCoord G; //!< グローバル座標群
+    
+    Vec3d cm; //!< 質量重心
 };
+
+#endif //  _PCT_HPP_
