@@ -7,6 +7,28 @@
 //#ifndef _PCT_HPP_
 //#define _PCT_HPP_
 
+class Vec4d
+{
+public:
+    double x; //!< Vector of x
+    double y; //!< Vector of y
+    double z; //!< Vector of z
+	double m; //!< Vector of m
+	
+    inline Vec4d(): x(0), y(0), z(0), m(0) {}
+    inline Vec4d(double _x, double _y, double _z, double _m)
+    {
+        x = _x;
+        y = _y;
+        z = _z;
+		m = _m;
+    }
+	
+};
+
+
+
+
 /*!
     *  \class Cluster
     *  \brief local coordinate system
@@ -16,7 +38,17 @@
 class Cluster
 {
 public:
+	//ローカルの座標系
     Vec3d x;
 	Vec3d y;
 	Vec3d z;
+	
+	//ローカル座標群
+	std::vector<Vec3d> l;
+	
+	//グローバル座標群
+	std::vector<Vec4d> g;
+	
+	//質量重心
+	Vec3d cm;
 };
