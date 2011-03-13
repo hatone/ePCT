@@ -1,17 +1,18 @@
 ﻿#include <iostream>
 #include <vector>
 #include "mrStd.hpp"
+#include "pct.hpp"
 
 
-void motionCaputure(std::vector<Vec3i> mrkrF, std::vector<Vec3i> mrkrT)
+void motionCaputure(std::vector<Vec3d> mrkrF, std::vector<Vec3d> mrkrT)
 {
 //ここに処理書く
 }
-void pct (std::vector<Vec3i> mrkrF, Vec3i mrkrT)
+void pct (std::vector<Vec3d> mrkrF, Cluster c)
 {
 //ここに処理書く
 }
-void display (Vec3i mrkrF, Vec3i mrkrT)
+void display (Cluster f, Cluster t)
 {
 //ここに処理書く
 }
@@ -20,10 +21,9 @@ void display (Vec3i mrkrF, Vec3i mrkrT)
 
 int main(int argc, char *argv[])
 {
-    std::vector<Vec3i> mrkrF, mrkrT;  
-//	Cluster f, t;　//ここどうしよう
+    std::vector<Vec3d> mrkrF, mrkrT;  
+	Cluster f, t;
 	
-	Vec3i f,t;
 	motionCaputure(mrkrF, mrkrT);
     pct(mrkrF, f);    
 	pct(mrkrT, t);
