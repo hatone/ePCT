@@ -44,10 +44,16 @@ public:
 	Vec3d z;
 	
 	//ローカル座標群
-	std::vector<Vec3d> l;
+	class LoCoord{
+	public:
+		std::vector<Vec3d> m_coordinates;
+	};
 	
 	//グローバル座標群
-	std::vector<Vec4d> g;
+	class GrCoord{
+	public:
+		std::vector<Vec4d> m_coordinates;
+	};
 	
 	//質量重心
 	Vec3d cm;
