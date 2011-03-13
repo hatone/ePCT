@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include "mrStd.hpp"
 
@@ -29,7 +29,8 @@ int main(int argc, char *argv[])
 	pct(mrkrT, t);
     display(f, t);
 	
-	std::cout<<"yeah!!!!!!!!!!"<<std::endl;
+	std::cout << "yeah!!!!!!!!!!" << std::endl;
+	std::cout << "nuha-!!!!!!!!!" << std::endl;
 	
     return 0;
 
