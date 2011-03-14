@@ -8,10 +8,23 @@ void motionCaputure(GrCoord mrkrF, GrCoord mrkrT)
 {
 //ここに処理書く
 }
-void pct (GrCoord mrkr, Cluster c)
+void pct(GrCoord mrkr, Cluster c)
 {
 //ここに処理書く
     std::cout<<"PCT"<<std::endl;
+    
+    // 適当なグローバル座標群を作成
+    std::vector<Vec4d> coordinates;
+    int size = 10;
+    coordinate.reserve(size);
+    for (int i = 0; i < size; i++)
+    {
+        Vec4d v(i, i+1, i+2, i+3);
+        coordinates.push_back(v);
+    }
+    
+    // グローバル座標群を代入
+    mrkr.setCoord(coordinates);
 }
 void display (Cluster f, Cluster t)
 {

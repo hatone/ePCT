@@ -59,20 +59,9 @@ public:
     std::vector<Vec4d> m_coordinates;
     
     
-    template <typename T> inline Vec3d weightFactor(std::vector<Vec4d> m_coordinates)
+    inline void setCoord(std::vector<Vec4d> &coordinates)
     {
-        
-        Vec3d c,gm;
-        double m;
-        
-        for(int i=0; i< m_coordinates.size(); i++)
-        {
-            m += m_coordinates[i].m;
-            gm += m_coordinates[i].prod( m_coordinates[i].m);
-        }
-        
-        c = gm.divis(m);
-        return c;
+        m_coordinate = coordinate;
     }
     
 };
