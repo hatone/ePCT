@@ -24,6 +24,17 @@ public:
         m = _m;
     }
     
+    /*!
+     *  \brief 積
+     *  \param n 掛ける数
+     */
+    inline Vec4d prod(double n)
+    {
+        return Vec4d(x*n, y*n, z*n, m);
+    }
+    
+
+    
 };
 
 /*!
@@ -46,6 +57,24 @@ public:
 class GrCoord{
 public:
     std::vector<Vec4d> m_coordinates;
+    
+    
+    template <typename T> inline Vec3d weightFactor(std::vector<Vec4d> m_coordinates)
+    {
+        
+        Vec3d c,gm;
+        double m;
+        
+        for(int i=0; i< m_coordinates.size(); i++)
+        {
+            m += m_coordinates[i].m;
+            gm += m_coordinates[i].prod( m_coordinates[i].m);
+        }
+        
+        c = gm.divis(m);
+        return c;
+    }
+    
 };
 
 /*!
@@ -65,5 +94,6 @@ public:
     
     Vec3d cm; //!< 質量重心
 };
+
 
 #endif //  _PCT_HPP_

@@ -324,6 +324,11 @@ public:
         y *= l;
         z *= l;
     }
+    
+    inline Vec3d divis(double n)
+    {
+        return Vec3d(x/n, y/n, z/n);
+    }
 };
 
 
