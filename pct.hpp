@@ -61,23 +61,24 @@ public:
 class GrCoord{
 public:
     
-    std::vector<Vec4d> m_coordinates;
+    std::vector<Vec3d> m_coordinates;
+    std::vector<double> m_mass;
     
-    inline void setCoord(std::vector<Vec4d> &coordinates)
+    inline void setCoord(std::vector<Vec3d> &coordinates)
     {
         m_coordinates = coordinates;
     }
     
-    inline Vec3d weightFactor(std::vector<Vec4d> m_coordinates)
+    inline Vec3d weightFactor(std::vector<Vec3d> coordinates)
     {
         
         Vec3d c,gm;
         double m;
         
-        for(int i=0; i< m_coordinates.size(); i++)
+        for(int i=0; i< coordinates.size(); i++)
         {
-            m += m_coordinates[i].m;
-            gm += m_coordinates[i].prod( m_coordinates[i].m);
+            m += m_mass[i];
+            gm.sum(coordinates[i].prod(m_mass[i]));
         }
         
         c = gm.divis(m);

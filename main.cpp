@@ -14,13 +14,15 @@ void pct(GrCoord mrkr, Cluster c)
     std::cout<<"PCT"<<std::endl;
     
     // 適当なグローバル座標群を作成
-    std::vector<Vec4d> coordinates;
+    std::vector<Vec3d> coordinates;
     int size = 10;
     coordinates.reserve(size);
     for (int i = 0; i < size; i++)
     {
-        Vec4d v(i, i+1, i+2, i+3);
+        Vec3d v(i, i+1, i+2);
         coordinates.push_back(v);
+        
+        std::cout<< v.x << std::endl;
     }
     
     // グローバル座標群を代入
