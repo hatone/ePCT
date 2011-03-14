@@ -4,11 +4,11 @@
 #include "pct.hpp"
 
 
-void motionCaputure(std::vector<Vec3d> mrkrF, std::vector<Vec3d> mrkrT)
+void motionCaputure(GrCoord mrkrF, GrCoord mrkrT)
 {
 //ここに処理書く
 }
-void pct (std::vector<Vec3d> mrkr, Cluster c)
+void pct (GrCoord mrkr, Cluster c)
 {
 //ここに処理書く
     std::cout<<"PCT"<<std::endl;
@@ -22,7 +22,7 @@ void display (Cluster f, Cluster t)
 
 int main(int argc, char *argv[])
 {
-    std::vector<Vec3d> mrkrF, mrkrT;  
+    GrCoord mrkrF, mrkrT;  
 	Cluster f, t;
     
 	motionCaputure(mrkrF, mrkrT);
