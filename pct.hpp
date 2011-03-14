@@ -33,6 +33,10 @@ public:
         return Vec4d(x*n, y*n, z*n, m);
     }
     
+    inline Vec4d sum(Vec4d v)
+    {
+        return Vec4d(x+v.x, y+v.y, z+v.z, m);
+    }
 
     
 };
@@ -56,13 +60,30 @@ public:
  */
 class GrCoord{
 public:
-    std::vector<Vec4d> m_coordinates;
     
+    std::vector<Vec4d> m_coordinates;
     
     inline void setCoord(std::vector<Vec4d> &coordinates)
     {
-        m_coordinate = coordinate;
+        m_coordinates = coordinates;
     }
+    
+    inline Vec3d weightFactor(std::vector<Vec4d> m_coordinates)
+    {
+        
+        Vec3d c,gm;
+        double m;
+        
+        for(int i=0; i< m_coordinates.size(); i++)
+        {
+            m += m_coordinates[i].m;
+            gm += m_coordinates[i].prod( m_coordinates[i].m);
+        }
+        
+        c = gm.divis(m);
+        return c;
+    }
+    
     
 };
 

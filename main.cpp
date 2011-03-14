@@ -16,7 +16,7 @@ void pct(GrCoord mrkr, Cluster c)
     // 適当なグローバル座標群を作成
     std::vector<Vec4d> coordinates;
     int size = 10;
-    coordinate.reserve(size);
+    coordinates.reserve(size);
     for (int i = 0; i < size; i++)
     {
         Vec4d v(i, i+1, i+2, i+3);
