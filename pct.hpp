@@ -86,10 +86,28 @@ public:
         for(int i=0; i< coordinates.size(); i++)
         {
             m += mass[i];
-            gm=gm.sum(coordinates[i]);
+            gm=gm.sum( coordinates[i].prod(mass[i]) ); //gm+= g*m ;
+            
         }
         c = gm.divis(m);
         return c;
+    }
+    
+    /*!
+     *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
+     *  \param coordinatesグローバル座標群, mass質量群
+     */
+    inline std::vector<Vec3d> createP(std::vector<Vec3d> coordinates, Vec3d wFact,std::vector<Vec3d> &p)
+    {
+        
+        
+        for(int i=0; i< coordinates.size(); i++)
+        {
+            p[i]=coordinates[i].sum(wFact.prod(-1));
+            
+        }
+        
+        return p;
     }
     
     
