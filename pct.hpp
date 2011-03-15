@@ -7,39 +7,9 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-//class Vec4d
-//{
-//public:
-//    double x; //!< Vector of x
-//    double y; //!< Vector of y
-//    double z; //!< Vector of z
-//    double m; //!< Vector of m
-//    
-//    inline Vec4d(): x(0.0), y(0.0), z(0.0), m(0.0) {}
-//    inline Vec4d(double _x, double _y, double _z, double _m)
-//    {
-//        x = _x;
-//        y = _y;
-//        z = _z;
-//        m = _m;
-//    }
-//    
-//    /*!
-//     *  \brief 積
-//     *  \param n 掛ける数
-//     */
-//    inline Vec4d prod(double n)
-//    {
-//        return Vec4d(x*n, y*n, z*n, m);
-//    }
-//    
-//    inline Vec4d sum(Vec4d v)
-//    {
-//        return Vec4d(x+v.x, y+v.y, z+v.z, m);
-//    }
-//
-//    
-//};
+#include "cpplapack.h"
+
+
 
 /*!
  *  \class LoCoord
@@ -89,7 +59,7 @@ public:
             gm=gm.sum( coordinates[i].prod(mass[i]) ); //gm+= g*m ;
             
         }
-        c = gm.divis(m);
+        c = gm.prod(1/m);
         return c;
     }
     
@@ -108,6 +78,35 @@ public:
         }
         
         return p;
+    }
+    
+    
+    /*!
+     *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
+     *  \param coordinatesグローバル座標群, mass質量群
+     */
+    inline CPPL::dgematrix ctrateTensor(std::vector<Vec3d> coordinates, std::vector<double> mass)
+    {
+        
+        CPPL::dgematrix I(3,3);
+        
+        for(int i=0; i< coordinates.size(); i++)
+        {
+            I(0,0) += (coordinates[i].y * coordinates[i].y * mass[i]) + (coordinates[i].z * coordinates[i].z * mass[i]);
+            I(0,1) += coordinates[i].x * coordinates[i].y * -1 * mass[i];
+            I(0,2) += coordinates[i].x * coordinates[i].z * -1 * mass[i];
+            
+            I(1,0) += coordinates[i].x * coordinates[i].y * -1 * mass[i];
+            I(1,1) += (coordinates[i].z * coordinates[i].z * mass[i])  + (coordinates[i].x * coordinates[i].x * mass[i]);   
+            I(1,2) += coordinates[i].y * coordinates[i].z * -1 * mass[i];
+            
+            I(2,0) += coordinates[i].x * coordinates[i].z * -1 * mass[i];            
+            I(2,1) += coordinates[i].y * coordinates[i].z * -1 * mass[i];
+            I(2,3) += (coordinates[i].x * coordinates[i].x * mass[i])  + (coordinates[i].y * coordinates[i].y * mass[i]);  
+            
+        }
+        
+        return I;
     }
     
     

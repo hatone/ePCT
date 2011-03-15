@@ -33,8 +33,10 @@ void pct(GrCoord mrkr, Cluster c)
     // グローバル座標群を代入
     mrkr.setCoord(coordinates);
     wFact=mrkr.weightFactor(coordinates,mass);
-    std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
+
     p=mrkr.createP(coordinates,wFact,p);
+    
+        std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
     std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
     
     
