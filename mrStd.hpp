@@ -64,6 +64,32 @@ public:
     }
 
     /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator-(const Vec2i& arg)
+    {
+        Vec2i v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator-=(const Vec2i& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
+
+        return *this;
+    }
+
+    /*!
      *  \brief 和
      *  \param n 足す数
      */
@@ -132,6 +158,34 @@ public:
     }
 
     /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator-(const Vec3i& arg)
+    {
+        Vec3i v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+        v.z = z - arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator -= Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator-=(const Vec3i& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
+        z -= arg.z;
+
+        return *this;
+    }
+
+    /*!
      *  \brief 和
      *  \param n 足す数
      */
@@ -191,6 +245,32 @@ public:
     {
         x += arg.x;
         y += arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator-(const Vec2f& arg)
+    {
+        Vec2f v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator -= Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator-=(const Vec2f& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
 
         return *this;
     }
@@ -280,6 +360,33 @@ public:
 
         return *this;
     }
+    /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator-(const Vec3f& arg)
+    {
+        Vec3f v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+        v.z = z - arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator -= Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator-=(const Vec3f& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
+        z -= arg.z;
+
+        return *this;
+    }
 
     /*!
      *  \brief 和
@@ -360,6 +467,32 @@ public:
     {
         x += arg.x;
         y += arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator-(const Vec2d& arg)
+    {
+        Vec2d v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator -= Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator-=(const Vec2d& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
 
         return *this;
     }
@@ -446,6 +579,33 @@ public:
         x += arg.x;
         y += arg.y;
         z += arg.z;
+
+        return *this;
+    }
+    /*!
+     *  \brief Operator - Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator-(const Vec3d& arg)
+    {
+        Vec3d v;
+        
+        v.x = x - arg.x;
+        v.y = y - arg.y;
+        v.z = z - arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator -= Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator-=(const Vec3d& arg)
+    {
+        x -= arg.x;
+        y -= arg.y;
+        z -= arg.z;
 
         return *this;
     }
