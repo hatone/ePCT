@@ -7,7 +7,7 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-#include "cpplapack.h"
+#include <cpplapack/cpplapack.h>
 
 
 
@@ -85,7 +85,7 @@ public:
      *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline CPPL::dgematrix ctrateTensor(std::vector<Vec3d> coordinates, std::vector<double> mass)
+    inline CPPL::dgematrix createTensor(std::vector<Vec3d> coordinates, std::vector<double> mass)
     {
         
         CPPL::dgematrix I(3,3);
@@ -102,7 +102,7 @@ public:
             
             I(2,0) += coordinates[i].x * coordinates[i].z * -1 * mass[i];            
             I(2,1) += coordinates[i].y * coordinates[i].z * -1 * mass[i];
-            I(2,3) += (coordinates[i].x * coordinates[i].x * mass[i])  + (coordinates[i].y * coordinates[i].y * mass[i]);  
+            I(2,2) += (coordinates[i].x * coordinates[i].x * mass[i])  + (coordinates[i].y * coordinates[i].y * mass[i]);  
             
         }
         
