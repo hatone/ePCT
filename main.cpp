@@ -35,6 +35,7 @@ void pct(GrCoord mrkr, Cluster c)
     int size = 3;
     std::vector<Vec3d> coordinates;
     std::vector<double> mass;
+    
 
     std::ifstream fin("fileName");
 
@@ -42,21 +43,27 @@ void pct(GrCoord mrkr, Cluster c)
     mass.reserve(size);
     while (!fin.eof())
     {
+        //ここで無限ループに陥ってる
         std::string buf;
         fin >> buf;
         boost::tokenizer<> tk(buf);
+        
 
         for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
         {
+                    
             Vec3d v;
             v.x = boost::lexical_cast<double>(*it++);
             v.y = boost::lexical_cast<double>(*it++);
             v.z = boost::lexical_cast<double>(*it++);
             mass.push_back(boost::lexical_cast<double>(*it++));
             coordinates.push_back(v);
+            
         }
+        
+      
     }
-
+ 
     fin.close();
 
 

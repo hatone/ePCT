@@ -59,7 +59,7 @@ public:
         
         for(int i=0; i< coordinates.size(); i++)
         {
-            m += mass[i];
+            m = m + mass[i];
             gm=gm.sum( coordinates[i].prod(mass[i]) ); //gm+= g*m ;
             
         }
