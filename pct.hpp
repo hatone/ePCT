@@ -9,6 +9,10 @@
 
 #include <cpplapack/cpplapack.h>
 
+/*
+// 本間用
+#include <cpplapack.h>
+*/
 
 
 /*!

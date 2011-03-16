@@ -1,9 +1,22 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
 #include "mrStd.hpp"
 #include "pct.hpp"
 #include <cpplapack/cpplapack.h>
+#include <boost/tokenizer.hpp>
+#include <boost/lexical_cast.hpp>
 
+/*
+// 本間用
+#include <cpplapack.h>
+#pragma comment(lib, "clapack.lib")
+#pragma comment(lib, "BLAS.lib")
+#pragma comment(lib, "libf2c.lib")
+*/
+
+const std::string fileName("t0.txt");
 
 void motionCaputure(GrCoord mrkrF, GrCoord mrkrT)
 {
@@ -18,23 +31,53 @@ void pct(GrCoord mrkr, Cluster c)
     std::vector<Vec3d> p;//慣性テンソル行列を生成するためのP(t)i
     
     // 適当なグローバル座標群を作成
+    int size = 3;
     std::vector<Vec3d> coordinates;
     std::vector<double> mass;
-    int size = 3;
+
+    std::ifstream fin(fileName);
+
     coordinates.reserve(size);
-    for (int i = 0; i < size; i++)
+    mass.reserve(size);
+    while (!fin.eof())
     {
-        Vec3d v(i, i+1, i+2);
-        coordinates.push_back(v);
-        p.push_back(v);
-        mass.push_back(2);
-        
-        std::cout<<v.x<<v.y<<v.z<<std::endl;
+        std::string buf;
+        fin >> buf;
+        boost::tokenizer<> tk(buf);
+
+        for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
+        {
+            Vec3d v;
+            v.x = boost::lexical_cast<double>(*it++);
+            v.y = boost::lexical_cast<double>(*it++);
+            v.z = boost::lexical_cast<double>(*it++);
+            mass.push_back(boost::lexical_cast<double>(*it++));
+            coordinates.push_back(v);
+        }
     }
+
+    fin.close();
+
+
+    //coordinates.reserve(size);
+    //for (int i = 0; i < size; i++)
+    //{
+    //    Vec3d v(i, i+1, i+2);
+    //    coordinates.push_back(v);
+    //    p.push_back(v);
+    //    mass.push_back(2);
+    //    
+    //    std::cout<<v.x<<v.y<<v.z<<std::endl;
+    //}
     
     // グローバル座標群を代入
     mrkr.setCoord(coordinates);
-    
+
+    for (std::vector<Vec3d>::iterator it = mrkr.m_coordinates.begin(); it != mrkr.m_coordinates.end(); it++)
+    {
+        std::cout << it->x << ", " << it->y << ", " << it->z << std::endl;
+    }
+
     //質量重心算出
     wFact=mrkr.weightFactor(coordinates,mass);
     
