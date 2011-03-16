@@ -24,6 +24,7 @@ void motionCaputure(GrCoord mrkrF, GrCoord mrkrT)
 }
 void pct(GrCoord mrkr, Cluster c)
 {
+
     //ここに処理書く
     std::cout<<"PCT"<<std::endl;
     Vec3d wFact;//質量重心
@@ -35,7 +36,7 @@ void pct(GrCoord mrkr, Cluster c)
     std::vector<Vec3d> coordinates;
     std::vector<double> mass;
 
-    std::ifstream fin(fileName);
+    std::ifstream fin("fileName");
 
     coordinates.reserve(size);
     mass.reserve(size);
