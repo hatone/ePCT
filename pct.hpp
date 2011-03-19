@@ -7,9 +7,9 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-#include <cpplapack/cpplapack.h>
+//#include <cpplapack/cpplapack.h>
 
-
+#include <cpplapack.h>
 
 /*!
  *  \class LoCoord
@@ -47,20 +47,19 @@ public:
      *  \brief 質量重心
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline Vec3d weightFactor(std::vector<Vec3d> coordinates, std::vector<double> mass)
+    inline void weightFactor(Vec3d &C)
     {
+        Vec3d gm;
+        double m = 0.0;
         
-        Vec3d c,gm;
-        double m;
-        
-        for(int i=0; i< coordinates.size(); i++)
+        for(int i = 0; i < m_coordinates.size(); i++)
         {
-            m += mass[i];
-            gm=gm.sum( coordinates[i].prod(mass[i]) ); //gm+= g*m ;
-            
+            m += m_mass[i];
+            //gm = gm.sum(m_coordinates[i].prod(m_mass[i]));
+            //gm+= g*m ;
+            gm += m_coordinates[i]*m_mass[i];
         }
-        c = gm.prod(1/m);
-        return c;
+        C = gm.prod(1.0/m);
     }
     
     /*!
@@ -69,12 +68,9 @@ public:
      */
     inline std::vector<Vec3d> createP(std::vector<Vec3d> coordinates, Vec3d wFact,std::vector<Vec3d> &p)
     {
-        
-        
-        for(int i=0; i< coordinates.size(); i++)
+        for (int i=0; i< coordinates.size(); i++)
         {
             p[i]=coordinates[i].sum(wFact.prod(-1));
-            
         }
         
         return p;

@@ -14,7 +14,7 @@
 #include <cmath>
 #include <map>
 
-#include <bzlib.h>
+//#include <bzlib.h>
 #include <boost/math/quaternion.hpp> 
 //#include <boost\math\quaternion.hpp>
 
@@ -41,7 +41,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec2i operator+(const Vec2i& arg)
+    inline Vec2i operator+(const Vec2i &arg)
     {
         Vec2i v;
         
@@ -55,7 +55,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec2i operator+=(const Vec2i& arg)
+    inline Vec2i operator+=(const Vec2i &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -67,7 +67,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec2i operator-(const Vec2i& arg)
+    inline Vec2i operator-(const Vec2i &arg)
     {
         Vec2i v;
         
@@ -81,10 +81,114 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec2i operator-=(const Vec2i& arg)
+    inline Vec2i operator-=(const Vec2i &arg)
     {
         x -= arg.x;
         y -= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator*(const Vec2i &arg)
+    {
+        Vec2i v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator*=(const Vec2i &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator * Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator*(const int &arg)
+    {
+        Vec2i v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator *= Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator*=(const int &arg)
+    {
+        x *= arg;
+        y *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator/(const Vec2i &arg)
+    {
+        Vec2i v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator/=(const Vec2i &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator/(const int &arg)
+    {
+        Vec2i v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec2i operator/=(const int &arg)
+    {
+        x /= arg;
+        y /= arg;
 
         return *this;
     }
@@ -133,7 +237,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec3i operator+(const Vec3i& arg)
+    inline Vec3i operator+(const Vec3i &arg)
     {
         Vec3i v;
         
@@ -148,7 +252,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec3i operator+=(const Vec3i& arg)
+    inline Vec3i operator+=(const Vec3i &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -161,7 +265,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec3i operator-(const Vec3i& arg)
+    inline Vec3i operator-(const Vec3i &arg)
     {
         Vec3i v;
         
@@ -176,11 +280,123 @@ public:
      *  \brief Operator -= Overload
      *  \param arg parameter
      */
-    inline Vec3i operator-=(const Vec3i& arg)
+    inline Vec3i operator-=(const Vec3i &arg)
     {
         x -= arg.x;
         y -= arg.y;
         z -= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator*(const Vec3i &arg)
+    {
+        Vec3i v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+        v.z = z * arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator*=(const Vec3i &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+        z *= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator*(const int &arg)
+    {
+        Vec3i v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+        v.z = z * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator*=(const int &arg)
+    {
+        x *= arg;
+        y *= arg;
+        z *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator/(const Vec3i &arg)
+    {
+        Vec3i v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+        v.z = z / arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator/=(const Vec3i &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+        z /= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator/(const double &arg)
+    {
+        Vec3i v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+        v.z = z / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec3i operator/=(const double &arg)
+    {
+        x /= arg;
+        y /= arg;
+        z /= arg;
 
         return *this;
     }
@@ -227,7 +443,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec2f operator+(const Vec2f& arg)
+    inline Vec2f operator+(const Vec2f &arg)
     {
         Vec2f v;
         
@@ -241,7 +457,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec2f operator+=(const Vec2f& arg)
+    inline Vec2f operator+=(const Vec2f &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -253,7 +469,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec2f operator-(const Vec2f& arg)
+    inline Vec2f operator-(const Vec2f &arg)
     {
         Vec2f v;
         
@@ -267,10 +483,114 @@ public:
      *  \brief Operator -= Overload
      *  \param arg parameter
      */
-    inline Vec2f operator-=(const Vec2f& arg)
+    inline Vec2f operator-=(const Vec2f &arg)
     {
         x -= arg.x;
         y -= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator*(const Vec2f &arg)
+    {
+        Vec2f v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator*=(const Vec2f &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator * Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator*(const float &arg)
+    {
+        Vec2f v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator *= Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator*=(const float &arg)
+    {
+        x *= arg;
+        y *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator/(const Vec2f &arg)
+    {
+        Vec2f v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator/=(const Vec2f &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator/(const float &arg)
+    {
+        Vec2f v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec2f operator/=(const float &arg)
+    {
+        x /= arg;
+        y /= arg;
 
         return *this;
     }
@@ -337,7 +657,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec3f operator+(const Vec3f& arg)
+    inline Vec3f operator+(const Vec3f &arg)
     {
         Vec3f v;
         
@@ -352,7 +672,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec3f operator+=(const Vec3f& arg)
+    inline Vec3f operator+=(const Vec3f &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -364,7 +684,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec3f operator-(const Vec3f& arg)
+    inline Vec3f operator-(const Vec3f &arg)
     {
         Vec3f v;
         
@@ -379,11 +699,123 @@ public:
      *  \brief Operator -= Overload
      *  \param arg parameter
      */
-    inline Vec3f operator-=(const Vec3f& arg)
+    inline Vec3f operator-=(const Vec3f &arg)
     {
         x -= arg.x;
         y -= arg.y;
         z -= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator*(const Vec3f &arg)
+    {
+        Vec3f v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+        v.z = z * arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator*=(const Vec3f &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+        z *= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator * Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator*(const float &arg)
+    {
+        Vec3f v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+        v.z = z * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator *= Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator*=(const float &arg)
+    {
+        x *= arg;
+        y *= arg;
+        z *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator/(const Vec3f &arg)
+    {
+        Vec3f v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+        v.z = z / arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator/=(const Vec3f &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+        z /= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator/(const float &arg)
+    {
+        Vec3f v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+        v.z = z / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec3f operator/=(const float &arg)
+    {
+        x /= arg;
+        y /= arg;
+        z /= arg;
 
         return *this;
     }
@@ -449,7 +881,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec2d operator+(const Vec2d& arg)
+    inline Vec2d operator+(const Vec2d &arg)
     {
         Vec2d v;
         
@@ -463,7 +895,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec2d operator+=(const Vec2d& arg)
+    inline Vec2d operator+=(const Vec2d &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -475,7 +907,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec2d operator-(const Vec2d& arg)
+    inline Vec2d operator-(const Vec2d &arg)
     {
         Vec2d v;
         
@@ -489,10 +921,114 @@ public:
      *  \brief Operator -= Overload
      *  \param arg parameter
      */
-    inline Vec2d operator-=(const Vec2d& arg)
+    inline Vec2d operator-=(const Vec2d &arg)
     {
         x -= arg.x;
         y -= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator*(const Vec2d &arg)
+    {
+        Vec2d v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator*=(const Vec2d &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator * Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator*(const double &arg)
+    {
+        Vec2d v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator *= Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator*=(const double &arg)
+    {
+        x *= arg;
+        y *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator/(const Vec2d &arg)
+    {
+        Vec2d v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator/=(const Vec2d &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator/(const double &arg)
+    {
+        Vec2d v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec2d operator/=(const double &arg)
+    {
+        x /= arg;
+        y /= arg;
 
         return *this;
     }
@@ -559,7 +1095,7 @@ public:
      *  \brief Operator + Overload
      *  \param arg parameter
      */
-    inline Vec3d operator+(const Vec3d& arg)
+    inline Vec3d operator+(const Vec3d &arg)
     {
         Vec3d v;
         
@@ -574,7 +1110,7 @@ public:
      *  \brief Operator += Overload
      *  \param arg parameter
      */
-    inline Vec3d operator+=(const Vec3d& arg)
+    inline Vec3d operator+=(const Vec3d &arg)
     {
         x += arg.x;
         y += arg.y;
@@ -586,7 +1122,7 @@ public:
      *  \brief Operator - Overload
      *  \param arg parameter
      */
-    inline Vec3d operator-(const Vec3d& arg)
+    inline Vec3d operator-(const Vec3d &arg)
     {
         Vec3d v;
         
@@ -601,11 +1137,123 @@ public:
      *  \brief Operator -= Overload
      *  \param arg parameter
      */
-    inline Vec3d operator-=(const Vec3d& arg)
+    inline Vec3d operator-=(const Vec3d &arg)
     {
         x -= arg.x;
         y -= arg.y;
         z -= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator * Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator*(const Vec3d &arg)
+    {
+        Vec3d v;
+        
+        v.x = x * arg.x;
+        v.y = y * arg.y;
+        v.z = z * arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator *= Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator*=(const Vec3d &arg)
+    {
+        x *= arg.x;
+        y *= arg.y;
+        z *= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator*(const double &arg)
+    {
+        Vec3d v;
+        
+        v.x = x * arg;
+        v.y = y * arg;
+        v.z = z * arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator*=(const double &arg)
+    {
+        x *= arg;
+        y *= arg;
+        z *= arg;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator + Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator/(const Vec3d &arg)
+    {
+        Vec3d v;
+        
+        v.x = x / arg.x;
+        v.y = y / arg.y;
+        v.z = z / arg.z;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator += Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator/=(const Vec3d &arg)
+    {
+        x /= arg.x;
+        y /= arg.y;
+        z /= arg.z;
+
+        return *this;
+    }
+
+    /*!
+     *  \brief Operator / Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator/(const double &arg)
+    {
+        Vec3d v;
+        
+        v.x = x / arg;
+        v.y = y / arg;
+        v.z = z / arg;
+
+        return v;
+    }
+
+    /*!
+     *  \brief Operator /= Overload
+     *  \param arg parameter
+     */
+    inline Vec3d operator/=(const double &arg)
+    {
+        x /= arg;
+        y /= arg;
+        z /= arg;
 
         return *this;
     }
