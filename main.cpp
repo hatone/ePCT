@@ -13,7 +13,7 @@
 #include "pct.hpp"
 
 
-std::string fileName("t1.txt");
+const std::string fileName("t1.txt");
 
 void display(Cluster f, Cluster t)
 {
