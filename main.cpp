@@ -15,6 +15,31 @@
 
 const std::string fileName("t0.txt");
 
+void display(Cluster f, Cluster t)
+{
+    //ここに処理書く
+}
+
+void display(GrCoord &mrkr)
+{
+    printf("(     x,     y,     z,     m)\n");
+    for (unsigned int i = 0; i < mrkr.m_coordinates.size(); i++)
+    {
+        printf("( %3.3lf, %3.3lf, %3.3lf, %3.3lf)\n",
+            mrkr.m_coordinates[i].x, mrkr.m_coordinates[i].y, mrkr.m_coordinates[i].z, mrkr.m_mass[i]);
+    }
+}
+
+void display(std::vector<Vec3d> v)
+{
+    printf("(     x,     y,     z)\n");
+    for (unsigned int i = 0; i < v.size(); i++)
+    {
+        printf("( %3.3lf, %3.3lf, %3.3lf)\n",
+            v[i].x, v[i].y, v[i].z);
+    }
+}
+
 void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 {
     // そのうち読み込みをモーションキャプチャに合わせないとね
@@ -57,82 +82,60 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     }
     fin.close();
 }
-void pct(GrCoord mrkr, Cluster c)
+void pct(Cluster c)
 {
     //ここに処理書く
     std::cout<<"PCT"<<std::endl;
-    Vec3d C;//質量重心
+    Vec3d wFact;//質量重心
     std::vector<Vec3d> p;//慣性テンソル行列を生成するためのP(t)i
-    CPPL::dgematrix tI; //慣性テンソル行列I(t)
+    CPPL::dgematrix tI(3, 3); //慣性テンソル行列I(t)
     
     //質量重心算出
-    mrkr.weightFactor(C);
-    std::cout << "C(t): " << C.x << ", " << C.y << ", " << C.z << std::endl;
+    c.G.weightFactor(wFact);
+    std::cout << "C(t): " << wFact.x << ", " << wFact.y << ", " << wFact.z << std::endl;
     
-    ////慣性テンソル行列生成
-    //mrkr.createP(coordinates,wFact,p);
-    //tI=mrkr.createTensor(coordinates,mass);
-    //
-    ////慣性テンソル行列の固有と算出
-    //std::vector<double> wr, wi; //固有値 実数wr 虚数wi
-    //std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
-    //tI.dggev(tI,wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
-    //
-    //
-    ////表示系
-    //for(int i=0; i<3; i++){
-    //    std::cout << "#### " << i << "th eigen ####" << std::endl;
-    //    std::cout << "wr=" << wr[i] << std::endl;
-    //    std::cout << "wi=" << wi[i] << std::endl;
-    //    std::cout << "vr=\n" << vr[i] << std::endl;
-    //    std::cout << "vi=\n" << vi[i] << std::endl;
-    //}
-    //
-    //
+    //慣性テンソル行列生成
+    c.G.createP(wFact, p);
+    std::cout << "P = " << std::endl;
+    display(p);
 
-    //std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
-    //std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
-    //std::cout<<tI<<std::endl;
+    c.G.createTensor(tI);
+
+    //慣性テンソル行列の固有と算出
+    std::vector<double> wr, wi; //固有値 実数wr 虚数wi
+    std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
+    tI.dgeev(wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
+
+    //std::cout << vr[0].array[0] << vr[0].array[1] << vr[0].array[2] << std::endl;
     
-}
-void display(Cluster f, Cluster t)
-{
-    //ここに処理書く
-}
-
-void display(GrCoord &mrkr)
-{
-    printf("(     x,     y,     z,     m)\n");
-    for (unsigned int i = 0; i < mrkr.m_coordinates.size(); i++)
-    {
-        printf("( %3.3lf, %3.3lf, %3.3lf, %3.3lf)\n",
-            mrkr.m_coordinates[i].x, mrkr.m_coordinates[i].y, mrkr.m_coordinates[i].z, mrkr.m_mass[i]);
+    //表示系
+    for(int i=0; i<3; i++){
+        std::cout << "#### " << i << "th eigen ####" << std::endl;
+        std::cout << "wr=" << wr[i] << std::endl;
+        std::cout << "wi=" << wi[i] << std::endl;
+        std::cout << "vr=\n" << vr[i] << std::endl;
+        std::cout << "vi=\n" << vi[i] << std::endl;
     }
-}
+    
+    
 
+    std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
+    std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
+    std::cout<<tI<<std::endl;
+    
+}
 
 int main(int argc, char *argv[])
 {
- //   GrCoord mrkrF, mrkrT;  
-	//Cluster f, t;
- //   
-	//motionCaputure(mrkrF, mrkrT);
- //   display(mrkrF);
- //   display(mrkrT);
+	Cluster f, t;
+    
+	motionCaputure(f.G, t.G);
+    display(f.G);
+    display(t.G);
 
- //   pct(mrkrF, f);
-	////pct(mrkrT, t);
- //   display(f, t);
-
-    Vec3d v(1.0, 2.0, 3.0);
-    std::cout << v.x << ", " << v.y << ", " << v.z << std::endl;
-    v = v * 2.0;
-    std::cout << v.x << ", " << v.y << ", " << v.z << std::endl;
-    v *= 3;
-    std::cout << v.x << ", " << v.y << ", " << v.z << std::endl;
+    pct(f);
+	//pct(t);
+    display(f, t);
 
     return 0;
-    
 }
-
-
