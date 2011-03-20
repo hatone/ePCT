@@ -3,8 +3,8 @@
 
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
-#include <cpplapack/cpplapack.h>
-//#include <cpplapack.h>
+//#include <cpplapack/cpplapack.h>
+#include <cpplapack.h>
 #pragma comment(lib, "BLAS.lib")
 #pragma comment(lib, "clapack.lib")
 #pragma comment(lib, "libf2c.lib")
@@ -13,7 +13,7 @@
 #include "pct.hpp"
 
 
-//const std::string fileName("t1.txt");
+std::string fileName("t1.txt");
 
 void display(Cluster f, Cluster t)
 {
@@ -45,7 +45,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     // そのうち読み込みをモーションキャプチャに合わせないとね
     
     // 適当なグローバル座標群を作成
-    std::ifstream fin("t0.txt");
+    std::ifstream fin(fileName);
     GrCoord *p_crrnt;
     int size = 4;
     

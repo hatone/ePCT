@@ -7,9 +7,9 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-#include <cpplapack/cpplapack.h>
+//#include <cpplapack/cpplapack.h>
 
-//#include <cpplapack.h>
+#include <cpplapack.h>
 
 /*!
  *  \class LoCoord
