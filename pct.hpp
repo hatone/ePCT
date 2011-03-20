@@ -7,13 +7,9 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-#include <cpplapack/cpplapack.h>
+//#include <cpplapack/cpplapack.h>
 
-/*
-// 本間用
 #include <cpplapack.h>
-*/
-
 
 /*!
  *  \class LoCoord
@@ -51,37 +47,31 @@ public:
      *  \brief 質量重心
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline Vec3d weightFactor(std::vector<Vec3d> coordinates, std::vector<double> mass)
+    inline void weightFactor(Vec3d &C)
     {
+        Vec3d gm;
+        double m = 0.0;
         
-        Vec3d c,gm;
-        double m;
-        
-        for(int i=0; i< coordinates.size(); i++)
+        for(int i = 0; i < m_coordinates.size(); i++)
         {
-            m = m + mass[i];
-            gm=gm.sum( coordinates[i].prod(mass[i]) ); //gm+= g*m ;
-            
+            m += m_mass[i];
+            gm += m_coordinates[i]*m_mass[i];
         }
-        c = gm.prod(1/m);
-        return c;
+        C = gm * (1.0/m);
     }
     
     /*!
      *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline std::vector<Vec3d> createP(std::vector<Vec3d> coordinates, Vec3d wFact,std::vector<Vec3d> &p)
+    inline void createP(Vec3d &wFact,std::vector<Vec3d> &p)
     {
-        
-        
-        for(int i=0; i< coordinates.size(); i++)
+        p.reserve(m_coordinates.size());
+        for (int i = 0; i< m_coordinates.size(); i++)
         {
-            p[i]=coordinates[i].sum(wFact.prod(-1));
-            
+            //p[i] = m_coordinates[i].sum(wFact.prod(-1));
+            p.push_back(m_coordinates[i] + (wFact*(-1)));
         }
-        
-        return p;
     }
     
     
@@ -89,31 +79,24 @@ public:
      *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline CPPL::dgematrix createTensor(std::vector<Vec3d> coordinates, std::vector<double> mass)
+    inline void createTensor(CPPL::dgematrix I)
     {
-        
-        CPPL::dgematrix I(3,3);
-        
-        for(int i=0; i< coordinates.size(); i++)
+        for(int i=0; i< m_coordinates.size(); i++)
         {
-            I(0,0) += (coordinates[i].y * coordinates[i].y * mass[i]) + (coordinates[i].z * coordinates[i].z * mass[i]);
-            I(0,1) += coordinates[i].x * coordinates[i].y * -1 * mass[i];
-            I(0,2) += coordinates[i].x * coordinates[i].z * -1 * mass[i];
+            I(0,0) += (m_coordinates[i].y * m_coordinates[i].y * m_mass[i]) + (m_coordinates[i].z * m_coordinates[i].z * m_mass[i]);
+            I(0,1) += m_coordinates[i].x * m_coordinates[i].y * -1 * m_mass[i];
+            I(0,2) += m_coordinates[i].x * m_coordinates[i].z * -1 * m_mass[i];
             
-            I(1,0) += coordinates[i].x * coordinates[i].y * -1 * mass[i];
-            I(1,1) += (coordinates[i].z * coordinates[i].z * mass[i])  + (coordinates[i].x * coordinates[i].x * mass[i]);   
-            I(1,2) += coordinates[i].y * coordinates[i].z * -1 * mass[i];
+            I(1,0) += m_coordinates[i].x * m_coordinates[i].y * -1 * m_mass[i];
+            I(1,1) += (m_coordinates[i].z * m_coordinates[i].z * m_mass[i])  + (m_coordinates[i].x * m_coordinates[i].x * m_mass[i]);   
+            I(1,2) += m_coordinates[i].y * m_coordinates[i].z * -1 * m_mass[i];
             
-            I(2,0) += coordinates[i].x * coordinates[i].z * -1 * mass[i];            
-            I(2,1) += coordinates[i].y * coordinates[i].z * -1 * mass[i];
-            I(2,2) += (coordinates[i].x * coordinates[i].x * mass[i])  + (coordinates[i].y * coordinates[i].y * mass[i]);  
+            I(2,0) += m_coordinates[i].x * m_coordinates[i].z * -1 * m_mass[i];            
+            I(2,1) += m_coordinates[i].y * m_coordinates[i].z * -1 * m_mass[i];
+            I(2,2) += (m_coordinates[i].x * m_coordinates[i].x * m_mass[i])  + (m_coordinates[i].y * m_coordinates[i].y * m_mass[i]);  
             
         }
-        
-        return I;
     }
-    
-    
 };
 
 /*!
