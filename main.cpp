@@ -3,8 +3,8 @@
 
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <cpplapack/cpplapack.h>
-#include <cpplapack.h>
+#include <cpplapack/cpplapack.h>
+//#include <cpplapack.h>
 #pragma comment(lib, "BLAS.lib")
 #pragma comment(lib, "clapack.lib")
 #pragma comment(lib, "libf2c.lib")
@@ -13,7 +13,7 @@
 #include "pct.hpp"
 
 
-const std::string fileName("t0.txt");
+//const std::string fileName("t1.txt");
 
 void display(Cluster f, Cluster t)
 {
@@ -43,11 +43,14 @@ void display(std::vector<Vec3d> v)
 void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 {
     // そのうち読み込みをモーションキャプチャに合わせないとね
-
+    
     // 適当なグローバル座標群を作成
-    std::ifstream fin(fileName);
+    std::ifstream fin("t0.txt");
     GrCoord *p_crrnt;
     int size = 4;
+    
+
+    
 
     for (int i = 0; i < 2; i++)
     {
@@ -67,6 +70,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
         {
             std::string buf;
             fin >> buf;
+       
             boost::tokenizer<> tk(buf);
 
             for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
@@ -127,6 +131,13 @@ void pct(Cluster c)
 
 int main(int argc, char *argv[])
 {
+//    std::ofstream ofs;
+//	ofs.open( "t1.txt" );
+//    
+//	ofs << "testmessage" << 123 << std::endl;
+//    
+//	ofs.close();
+//    
 	Cluster f, t;
     
 	motionCaputure(f.G, t.G);
@@ -136,6 +147,9 @@ int main(int argc, char *argv[])
     pct(f);
 	//pct(t);
     display(f, t);
+    
+    
+
 
     return 0;
 }
