@@ -25,7 +25,7 @@ void display(GrCoord &mrkr)
     for (unsigned int i = 0; i < mrkr.m_coordinates.size(); i++)
     {
         printf("( %3.3lf, %3.3lf, %3.3lf, %3.3lf)\n",
-            mrkr.m_coordinates[i].x, mrkr.m_coordinates[i].y, mrkr.m_coordinates[i].z, mrkr.m_mass[i]);
+               mrkr.m_coordinates[i].x, mrkr.m_coordinates[i].y, mrkr.m_coordinates[i].z, mrkr.m_mass[i]);
     }
 }
 
@@ -35,7 +35,7 @@ void display(std::vector<Vec3d> v)
     for (unsigned int i = 0; i < v.size(); i++)
     {
         printf("( %3.3lf, %3.3lf, %3.3lf)\n",
-            v[i].x, v[i].y, v[i].z);
+               v[i].x, v[i].y, v[i].z);
     }
 }
 
@@ -52,23 +52,23 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     {
         switch (i)
         {
-        case 0:
-            p_crrnt = &mrkrF;
-            break;
-        case 1:
-            p_crrnt = &mrkrT;
-            break;
+            case 0:
+                p_crrnt = &mrkrF;
+                break;
+            case 1:
+                p_crrnt = &mrkrT;
+                break;
         }
-
+        
         p_crrnt->m_coordinates.reserve(size);
         p_crrnt->m_mass.reserve(size);
         for (int i = 0; i < size && !fin.eof(); i++)
         {
             std::string buf;
             fin >> buf;
-       
+            
             boost::tokenizer<> tk(buf);
-
+            
             for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
             {
                 Vec3d v;
@@ -89,6 +89,7 @@ void pct(Cluster c)
     Vec3d wFact;//質量重心
     std::vector<Vec3d> p;//慣性テンソル行列を生成するためのP(t)i
     CPPL::dgematrix tI(3, 3); //慣性テンソル行列I(t)
+    CPPL::dgematrix rot(3, 3); //回転行列
     
     //質量重心算出
     c.G.weightFactor(wFact);
@@ -98,14 +99,14 @@ void pct(Cluster c)
     c.G.createP(wFact, p);
     std::cout << "P = " << std::endl;
     display(p);
-
+    
     c.G.createTensor(tI);
-
+    
     //慣性テンソル行列の固有と算出
     std::vector<double> wr, wi; //固有値 実数wr 虚数wi
     std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
     tI.dgeev(wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
-
+    
     //std::cout << vr[0].array[0] << vr[0].array[1] << vr[0].array[2] << std::endl;
     
     //表示系
@@ -117,8 +118,19 @@ void pct(Cluster c)
         std::cout << "vi=\n" << vi[i] << std::endl;
     }
     
+    //回転行列
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            rot(i,j)=vr[i](j);
+        }
+    }
     
-
+    
+    
+    std::cout<<"hoge"<<rot<<std::endl;
+    
     std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
     std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
     std::cout<<tI<<std::endl;
@@ -132,7 +144,7 @@ int main(int argc, char *argv[])
 	motionCaputure(f.G, t.G);
     display(f.G);
     display(t.G);
-
+    
     pct(f);
 	//pct(t);
     display(f, t);
