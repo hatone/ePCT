@@ -3,8 +3,8 @@
 #include <vector>
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <cpplapack/cpplapack.h>
-#include <cpplapack.h>
+#include <cpplapack/cpplapack.h>
+//#include <cpplapack.h>
 #pragma comment(lib, "BLAS.lib")
 #pragma comment(lib, "clapack.lib")
 #pragma comment(lib, "libf2c.lib")
@@ -44,7 +44,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     // そのうち読み込みをモーションキャプチャに合わせないとね
     
     // 適当なグローバル座標群を作成
-    std::ifstream fin(fileName);
+    std::ifstream fin(fileName.c_str());
     GrCoord *p_crrnt;
     int size = 4;
     
