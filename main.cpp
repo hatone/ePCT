@@ -3,12 +3,13 @@
 #include <vector>
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <cpplapack/cpplapack.h>
-#include <cpplapack.h>
+#include <cpplapack/cpplapack.h>
+//#include <cpplapack.h>
 #pragma comment(lib, "BLAS.lib")
 #pragma comment(lib, "clapack.lib")
 #pragma comment(lib, "libf2c.lib")
 
+#include "levmar.h"
 #include "mrStd.hpp"
 #include "pct.hpp"
 
@@ -44,7 +45,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     // そのうち読み込みをモーションキャプチャに合わせないとね
     
     // 適当なグローバル座標群を作成
-    std::ifstream fin(fileName);
+    std::ifstream fin(fileName.c_str());
     GrCoord *p_crrnt;
     int size = 4;
     
@@ -112,9 +113,7 @@ void pct(Cluster c)
     for(int i=0; i<3; i++){
         std::cout << "#### " << i << "th eigen ####" << std::endl;
         std::cout << "wr=" << wr[i] << std::endl;
-        std::cout << "wi=" << wi[i] << std::endl;
         std::cout << "vr=\n" << vr[i] << std::endl;
-        std::cout << "vi=\n" << vi[i] << std::endl;
     }
     
     
@@ -134,7 +133,7 @@ int main(int argc, char *argv[])
     display(t.G);
 
     pct(f);
-	//pct(t);
+	pct(t);
     display(f, t);
     
     return 0;
