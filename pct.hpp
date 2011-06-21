@@ -20,6 +20,14 @@
 class LoCoord{
 public:
     std::vector<Vec3d> m_coordinates;
+    
+    
+    inline void setCoord(std::vector<Vec3d> &coordinates)
+    {
+        m_coordinates = coordinates;
+    }
+    
+    
 };
 
 /*!
@@ -32,7 +40,9 @@ class GrCoord{
 public:
     
     std::vector<Vec3d> m_coordinates;
+    std::vector<Vec3d> l_coordinates; //どうしよう
     std::vector<double> m_mass;
+    
     
     /*!
      *  \brief 任意の値をセットする？
@@ -97,6 +107,41 @@ public:
             
         }
     }
+    
+    /*!
+     *  \brief L = R^t (G-C)
+     *  \param 
+     */
+    inline void createLocal(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr)
+    {
+        std::vector<CPPL::dcovector> temp; //G-C
+        CPPL::dgematrix R;
+        
+        //転置R作り
+        for(int i=0; i<3; i++)
+        {
+            for(int j=0; j<3; j++)
+            {
+                R(j,i)=vr[i](j);
+            }
+        }
+        
+        
+        for(int i=0; i< m_coordinates.size(); i++)
+        {
+            temp[i](0)=m_coordinates[i].x - wFact.x;      
+            temp[i](1)=m_coordinates[i].y - wFact.y;   
+            temp[i](2)=m_coordinates[i].z - wFact.z;   
+        }
+        
+        for(int i=0; i< m_coordinates.size(); i++)
+        {
+            L[i]=R*temp[i];
+        }
+        
+    
+    }
+    
 };
 
 /*!

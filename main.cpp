@@ -97,6 +97,7 @@ void pct(Cluster c)
     
     //慣性テンソル行列生成
     c.G.createP(wFact, p);
+
     std::cout << "P = " << std::endl;
     display(p);
 
@@ -106,6 +107,8 @@ void pct(Cluster c)
     std::vector<double> wr, wi; //固有値 実数wr 虚数wi
     std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
     tI.dgeev(wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
+    
+ 
 
     //std::cout << vr[0].array[0] << vr[0].array[1] << vr[0].array[2] << std::endl;
     
@@ -121,6 +124,10 @@ void pct(Cluster c)
     std::cout<<wFact.x<<wFact.y<<wFact.z<<std::endl;
     std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
     std::cout<<tI<<std::endl;
+    
+    c.G.createLocal(<#& L#>, <#Vec3d wFact#>, <#& vr#>);
+    
+
     
 }
 
