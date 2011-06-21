@@ -115,9 +115,9 @@ public:
     inline void createLocal(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr)
     {
         std::vector<CPPL::dcovector> temp; //G-C
-        CPPL::dgematrix R;
+        CPPL::dgematrix R(3,3);
         
-        //転置R作り
+       //転置R作り
         for(int i=0; i<3; i++)
         {
             for(int j=0; j<3; j++)

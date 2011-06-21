@@ -125,9 +125,9 @@ void pct(Cluster c)
     std::cout<<p[0].x<<p[1].y<<p[2].z<<std::endl;
     std::cout<<tI<<std::endl;
     
-    c.G.createLocal(<#& L#>, <#Vec3d wFact#>, <#& vr#>);
+    std::vector<CPPL::dcovector> L;
+    c.G.createLocal(L, wFact, vr);
     
-
     
 }
 
