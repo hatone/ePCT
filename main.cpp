@@ -126,8 +126,15 @@ void pct(Cluster c)
     std::cout<<tI<<std::endl;
     
     std::vector<CPPL::dcovector> L;
-    c.G.createLocal(L, wFact, vr);
-    
+
+    c.createLocalCoordinates(L, wFact, vr);
+
+    std::cout << "Local Coordinate -- " << std::endl;
+    for (size_t i = 0; i < L.size(); i++)
+    {
+        std::cout << L[i] << std::endl;
+        std::cout << "--" << std::endl;
+    }
     
 }
 

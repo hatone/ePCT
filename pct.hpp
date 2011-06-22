@@ -8,7 +8,7 @@
 #define _PCT_HPP_
 
 #include <cpplapack/cpplapack.h>
-
+#include "mrStd.hpp"
 //#include <cpplapack.h>
 
 /*!
@@ -138,8 +138,6 @@ public:
         {
             L[i]=R*temp[i];
         }
-        
-    
     }
     
 };
@@ -160,6 +158,9 @@ public:
     GrCoord G; //!< グローバル座標群
     
     Vec3d cm; //!< 質量重心
+    
+    void createLocalCoordinates(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr);
+
 };
 
 
