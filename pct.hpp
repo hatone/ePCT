@@ -62,10 +62,9 @@ public:
     inline void createP(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &p)
     {
         p.reserve(m_coordinates.size());
-        for (int i = 0; i< m_coordinates.size(); i++)
+        for (size_t i = 0; i< m_coordinates.size(); i++)
         {
-            //p[i] = m_coordinates[i].sum(wFact.prod(-1));
-            p.push_back(m_coordinates[i] + (wFact*(-1)));
+            p.push_back(m_coordinates[i] + wFact*(-1));
         }
     }
     
@@ -74,9 +73,9 @@ public:
      *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
      *  \param coordinatesグローバル座標群, mass質量群
      */
-    inline void createTensor(CPPL::dgematrix I)
+    inline void createTensor(CPPL::dgematrix &I)
     {
-        for(int i=0; i< m_coordinates.size(); i++)
+        for(size_t i = 0; i < m_coordinates.size(); i++)
         {
             I(0,0) += (m_coordinates[i](1) * m_coordinates[i](1) * m_mass[i]) + (m_coordinates[i](2) * m_coordinates[i](2) * m_mass[i]);
             I(0,1) += m_coordinates[i](0) * m_coordinates[i](1) * -1 * m_mass[i];
@@ -89,7 +88,6 @@ public:
             I(2,0) += m_coordinates[i](0) * m_coordinates[i](2) * -1 * m_mass[i];            
             I(2,1) += m_coordinates[i](1) * m_coordinates[i](2) * -1 * m_mass[i];
             I(2,2) += (m_coordinates[i](0) * m_coordinates[i](0) * m_mass[i])  + (m_coordinates[i](1) * m_coordinates[i](1) * m_mass[i]);  
-            
         }
     }
     
@@ -112,14 +110,14 @@ public:
         }
         
         
-        for(int i=0; i< m_coordinates.size(); i++)
+        for(size_t i = 0; i < m_coordinates.size(); i++)
         {
-            temp[i](0)=m_coordinates[i](0) - wFact(0);      
-            temp[i](1)=m_coordinates[i](1) - wFact(1);   
-            temp[i](2)=m_coordinates[i](2) - wFact(2);   
+            temp[i](0) = m_coordinates[i](0) - wFact(0);      
+            temp[i](1) = m_coordinates[i](1) - wFact(1);   
+            temp[i](2) = m_coordinates[i](2) - wFact(2);   
         }
         
-        for(int i=0; i< m_coordinates.size(); i++)
+        for(size_t i = 0; i < m_coordinates.size(); i++)
         {
             L[i]=R*temp[i];
         }

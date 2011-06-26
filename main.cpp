@@ -126,8 +126,11 @@ void pct(Cluster c)
     
     
 
-    std::cout<<wFact(0)<<wFact(1)<<wFact(2)<<std::endl;
-    std::cout<<p[0](0)<<p[1](1)<<p[2](2)<<std::endl;
+    std::cout << "wFact" << std::endl;
+    std::cout<<wFact(0)<<", "<<wFact(1)<<", "<<wFact(2)<<std::endl;
+    std::cout << "P" << std::endl;
+    std::cout<<p[0](0)<<", "<<p[1](1)<<", "<<p[2](2)<<std::endl;
+    std::cout << "tI" << std::endl;
     std::cout<<tI<<std::endl;
     
     std::vector<CPPL::dcovector> L;
