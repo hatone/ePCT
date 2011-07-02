@@ -1,4 +1,4 @@
-/*!
+ï»¿/*!
  *  \file  pct.cpp
  *  \brief 
  */
@@ -14,24 +14,46 @@ Cluster::~Cluster()
 {
 }
 
-void Cluster::createLocalCoordinates(std::vector<CPPL::dcovector> &L, CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr)
+void Cluster::createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr)
 {
+    CPPL::dgematrix R(3,3);
+    CPPL::dgematrix tR;//è»¢ç½®è¡Œåˆ—
+    
+    for(size_t i=0; i<3; i++)
+    {
+        for(size_t j=0; j<3; j++)
+        {
+            R(j,i)=vr[i](j);
+        }
+    }
+    
+    tR= CPPL::t(R);
+    
+    L.m_coordinates.resize(G.m_coordinates.size());
+    
+
+    
+    for(size_t i=0; i< G.m_coordinates.size(); i++)
+    {
+        L.m_coordinates[i]=tR*(G.m_coordinates[i]-wFact);
+    }
+    
 }
 
 /*!
- *  \brief Ž¿—ÊdS
- *  \param coordinates[out] ƒOƒ[ƒoƒ‹À•WŒQ, massŽ¿—ÊŒQ
+ *  \brief Ã©Ã¸Ã³Â Ã¨dÃªS
+ *  \param coordinates[out] Ã‰OÃ‰Ã§Ã…[Ã‰oÃ‰Ã£Ã§Â¿Ã¯WÃ¥Q, massÃ©Ã¸Ã³Â Ã¥Q
  */
 void GrCoord::weightFactor(CPPL::dcovector &C)
 {
     CPPL::dcovector gm(3);
     double m = 0.0;
-        
+    
     for(size_t i = 0; i < m_coordinates.size(); i++)
     {
         m += m_mass[i];
         gm += m_coordinates[i]*m_mass[i];
     }
-
+    
     C = gm * (1.0/m);
 }

@@ -6,7 +6,7 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
-#include <cpplapack.h>
+#include <cpplapack/cpplapack.h>
 
 /*!
  *  \class LoCoord
@@ -144,7 +144,7 @@ public:
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
-    void createLocalCoordinates(std::vector<CPPL::dcovector> &L, CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr);
+    void createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr);
 
 };
 

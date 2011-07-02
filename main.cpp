@@ -7,7 +7,7 @@
 #include <vector>
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
-#include <cpplapack.h>
+#include <cpplapack/cpplapack.h>
 #pragma comment(lib, "BLAS.lib")
 #pragma comment(lib, "clapack.lib")
 #pragma comment(lib, "libf2c.lib")
@@ -132,17 +132,14 @@ void pct(Cluster c)
     std::cout<<p[0](0)<<", "<<p[1](1)<<", "<<p[2](2)<<std::endl;
     std::cout << "tI" << std::endl;
     std::cout<<tI<<std::endl;
-    
-    std::vector<CPPL::dcovector> L;
-
-    c.createLocalCoordinates(L, wFact, vr);
+    c.createLocalCoordinates(wFact, vr);
 
     std::cout << "Local Coordinate -- " << std::endl;
-    for (size_t i = 0; i < L.size(); i++)
-    {
-        std::cout << L[i] << std::endl;
-        std::cout << "--" << std::endl;
-    }
+//    for (size_t i = 0; i < L.size(); i++)
+//    {
+//        std::cout << L[i] << std::endl;
+//        std::cout << "--" << std::endl;
+//    }
     
 }
 
@@ -155,7 +152,7 @@ int main(int argc, char *argv[])
     display(t.G);
 
     pct(f);
-	//pct(t);
+	pct(t);
  //   display(f, t);
  //   
     return 0;
