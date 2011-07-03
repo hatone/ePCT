@@ -7,11 +7,6 @@
 #define _PCT_HPP_
 
 #include <cpplapack/cpplapack.h>
-<<<<<<< HEAD
-#include "mrStd.hpp"
-//#include <cpplapack.h>
-=======
->>>>>>> stdmr
 
 /*!
  *  \class LoCoord
@@ -21,17 +16,6 @@
  */
 class LoCoord{
 public:
-<<<<<<< HEAD
-    std::vector<Vec3d> m_coordinates;
-    
-    
-    inline void setCoord(std::vector<Vec3d> &coordinates)
-    {
-        m_coordinates = coordinates;
-    }
-    
-    
-=======
     std::vector<CPPL::dcovector> m_coordinates; // 座標
     
     /*!
@@ -44,7 +28,6 @@ public:
     {
         m_coordinates = coordinates;
     }
->>>>>>> stdmr
 };
 
 /*!
@@ -56,13 +39,8 @@ public:
 class GrCoord{
 public:
     
-<<<<<<< HEAD
-    std::vector<Vec3d> m_coordinates;
-    std::vector<Vec3d> l_coordinates; //どうしよう
-=======
     std::vector<CPPL::dcovector> m_coordinates;
     std::vector<CPPL::dcovector> l_coordinates; //どうしよう
->>>>>>> stdmr
     std::vector<double> m_mass;
     
     
@@ -122,7 +100,7 @@ public:
         std::vector<CPPL::dcovector> temp; //G-C
         CPPL::dgematrix R(3,3);
         
-       //転置R作り
+        //転置R作り
         for(int i=0; i<3; i++)
         {
             for(int j=0; j<3; j++)
@@ -145,41 +123,6 @@ public:
         }
     }
     
-<<<<<<< HEAD
-    /*!
-     *  \brief L = R^t (G-C)
-     *  \param 
-     */
-    inline void createLocal(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr)
-    {
-        std::vector<CPPL::dcovector> temp; //G-C
-        CPPL::dgematrix R(3,3);
-        
-       //転置R作り
-        for(int i=0; i<3; i++)
-        {
-            for(int j=0; j<3; j++)
-            {
-                R(j,i)=vr[i](j);
-            }
-        }
-        
-        
-        for(int i=0; i< m_coordinates.size(); i++)
-        {
-            temp[i](0)=m_coordinates[i].x - wFact.x;      
-            temp[i](1)=m_coordinates[i].y - wFact.y;   
-            temp[i](2)=m_coordinates[i].z - wFact.z;   
-        }
-        
-        for(int i=0; i< m_coordinates.size(); i++)
-        {
-            L[i]=R*temp[i];
-        }
-    }
-    
-=======
->>>>>>> stdmr
 };
 
 /*!
@@ -191,24 +134,18 @@ public:
 class Cluster
 {
     CPPL::dcovector pos;
-
+    
 public:
     LoCoord L; //!< ローカル座標群
     GrCoord G; //!< グローバル座標群
     
-<<<<<<< HEAD
-    Vec3d cm; //!< 質量重心
-    
-    void createLocalCoordinates(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr);
-=======
     CPPL::dcovector cm; //!< 質量重心
-
+    
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
     void createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr);
->>>>>>> stdmr
-
+    
 };
 
 

@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-#include "pct.hpp"
-
-void Cluster::createLocalCoordinates(std::vector<CPPL::dcovector> &L,Vec3d &wFact,std::vector<CPPL::dcovector> &vr)
-{
-=======
-﻿/*!
+/*!
  *  \file  pct.cpp
  *  \brief 
  */
@@ -37,7 +31,7 @@ void Cluster::createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::d
     
     L.m_coordinates.resize(G.m_coordinates.size());
     
-
+    
     
     for(size_t i=0; i< G.m_coordinates.size(); i++)
     {
@@ -47,8 +41,8 @@ void Cluster::createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::d
 }
 
 /*!
- *  \brief éøó èdêS
- *  \param coordinates[out] ÉOÉçÅ[ÉoÉãç¿ïWåQ, masséøó åQ
+ *  \brief éøó èdêS
+ *  \param coordinates[out] ÉOÉçÅ[ÉoÉãç¿ïWåQ, masséøó åQ
  */
 void GrCoord::weightFactor(CPPL::dcovector &C)
 {
@@ -62,5 +56,4 @@ void GrCoord::weightFactor(CPPL::dcovector &C)
     }
     
     C = gm * (1.0/m);
->>>>>>> stdmr
 }
