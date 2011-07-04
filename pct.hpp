@@ -56,42 +56,6 @@ public:
     void weightFactor(CPPL::dcovector &C); /// 質量重心を求める
     
     /*!
-     *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
-     *  \param coordinatesグローバル座標群, mass質量群
-     */
-    inline void createP(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &p)
-    {
-        p.reserve(m_coordinates.size());
-        for (size_t i = 0; i< m_coordinates.size(); i++)
-        {
-            p.push_back(m_coordinates[i] + wFact*(-1));
-        }
-    }
-    
-    
-    /*!
-     *  \brief 慣性テンソル行列を生成するためのP(t)iを求める
-     *  \param coordinatesグローバル座標群, mass質量群
-     */
-    inline void createTensor(CPPL::dgematrix &I)
-    {
-        for(size_t i = 0; i < m_coordinates.size(); i++)
-        {
-            I(0,0) += (m_coordinates[i](1) * m_coordinates[i](1) * m_mass[i]) + (m_coordinates[i](2) * m_coordinates[i](2) * m_mass[i]);
-            I(0,1) += m_coordinates[i](0) * m_coordinates[i](1) * -1 * m_mass[i];
-            I(0,2) += m_coordinates[i](0) * m_coordinates[i](2) * -1 * m_mass[i];
-            
-            I(1,0) += m_coordinates[i](0) * m_coordinates[i](1) * -1 * m_mass[i];
-            I(1,1) += (m_coordinates[i](2) * m_coordinates[i](2) * m_mass[i])  + (m_coordinates[i](0) * m_coordinates[i](0) * m_mass[i]);   
-            I(1,2) += m_coordinates[i](1) * m_coordinates[i](2) * -1 * m_mass[i];
-            
-            I(2,0) += m_coordinates[i](0) * m_coordinates[i](2) * -1 * m_mass[i];            
-            I(2,1) += m_coordinates[i](1) * m_coordinates[i](2) * -1 * m_mass[i];
-            I(2,2) += (m_coordinates[i](0) * m_coordinates[i](0) * m_mass[i])  + (m_coordinates[i](1) * m_coordinates[i](1) * m_mass[i]);  
-        }
-    }
-    
-    /*!
      *  \brief L = R^t (G-C)
      *  \param 
      */
@@ -133,8 +97,17 @@ public:
  */
 class Cluster
 {
+    //private:
+public: // デバッグ用，本当はprivate
+    CPPL::dcovector wFact; //!< 質量重心
+    std::vector<CPPL::dcovector> P; //!< 慣性テンソル行列を生成するためのP(t)
+    CPPL::dgematrix I; //!<慣性テンソル行列I(t)
+    
     CPPL::dcovector pos;
     
+    void weightFactor(); /// 質量重心を求める
+    void createP(); /// 慣性テンソル行列を生成するためのP(t)iを求める
+    void createTensor(); /// 慣性テンソル行列を生成するためのP(t)iを求める
 public:
     LoCoord L; //!< ローカル座標群
     GrCoord G; //!< グローバル座標群
@@ -144,9 +117,11 @@ public:
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
-    void createLocalCoordinates(CPPL::dcovector &wFact, std::vector<CPPL::dcovector> &vr);
-    void minimizeCoordinates();
+    void pct(); /// PCTの計算
     
+    void createLocalCoordinates(std::vector<CPPL::dcovector> &vr);
+    
+    void displayP();
 };
 
 
