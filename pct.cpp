@@ -88,6 +88,7 @@ void Cluster::weightFactor()
 {
     CPPL::dcovector gm(3);
     double m = 0.0;
+    gm(0) = gm(1) = gm(2) = 0.0;
     
     for(size_t i = 0; i < G.m_coordinates.size(); i++)
     {
