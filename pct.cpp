@@ -132,6 +132,9 @@ void Cluster::createTensor()
     I(2,1) = I(1,2);
 }
 
+void Cluster::redistributionMass()
+{
+}
 
 void Cluster::displayP()
 {
