@@ -6,10 +6,18 @@
 
 Cluster::Cluster()
 {
+    wFact.resize(3);
+    wFact.zero();
+    I.resize(3, 3);
+    I.zero();
+
     pos.resize(3);
+    pos.zero();
     cm.resize(3);
+    cm.zero();
 
     I.resize(3, 3);
+    I.zero();
 }
 
 Cluster::~Cluster()
@@ -21,21 +29,21 @@ void Cluster::createLocalCoordinates(std::vector<CPPL::dcovector> &vr)
     CPPL::dgematrix R(3,3);
     CPPL::dgematrix tR;//転置行列
     
-    for(size_t i=0; i<3; i++)
+    for(size_t i = 0; i < 3; i++)
     {
-        for(size_t j=0; j<3; j++)
+        for(size_t j = 0; j < 3; j++)
         {
-            R(j,i)=vr[i](j);
+            R(j,i) = vr[i](j);
         }
     }
     
-    tR= CPPL::t(R);
+    tR = CPPL::t(R);
     
     L.m_coordinates.resize(G.m_coordinates.size());
     
-    for(size_t i=0; i< G.m_coordinates.size(); i++)
+    for(size_t i = 0; i < G.m_coordinates.size(); i++)
     {
-        L.m_coordinates[i]=tR*(G.m_coordinates[i]-wFact);
+        L.m_coordinates[i] = tR*(G.m_coordinates[i]-wFact);
     }
     
 }
@@ -86,17 +94,15 @@ void Cluster::pct()
  */
 void Cluster::weightFactor()
 {
-    CPPL::dcovector gm(3);
     double m = 0.0;
-    gm(0) = gm(1) = gm(2) = 0.0;
     
     for(size_t i = 0; i < G.m_coordinates.size(); i++)
     {
         m += G.m_mass[i];
-        gm += G.m_coordinates[i] * G.m_mass[i];
+        wFact += G.m_coordinates[i] * G.m_mass[i];
     }
     
-    wFact = gm * (1.0/m);
+    wFact /= m;
 }
 
 /*!
