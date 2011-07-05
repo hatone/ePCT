@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  *  \file  main.cpp
  *  \brief 
  */
@@ -29,7 +29,7 @@ void display(GrCoord &mrkr)
     for (size_t i = 0; i < mrkr.m_coordinates.size(); i++)
     {
         printf("( %3.3lf, %3.3lf, %3.3lf, %3.3lf)\n",
-            mrkr.m_coordinates[i](0), mrkr.m_coordinates[i](1), mrkr.m_coordinates[i](2), mrkr.m_mass[i]);
+               mrkr.m_coordinates[i](0), mrkr.m_coordinates[i](1), mrkr.m_coordinates[i](2), mrkr.m_mass[i]);
     }
 }
 
@@ -39,7 +39,7 @@ void display(std::vector<CPPL::dcovector> v)
     for (size_t i = 0; i < v.size(); i++)
     {
         printf("( %3.3lf, %3.3lf, %3.3lf)\n",
-            v[i](0), v[i](1), v[i](2));
+               v[i](0), v[i](1), v[i](2));
     }
 }
 
@@ -56,31 +56,31 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     {
         switch (i)
         {
-        case 0:
-            p_crrnt = &mrkrF;
-            break;
-        case 1:
-            p_crrnt = &mrkrT;
-            break;
+            case 0:
+                p_crrnt = &mrkrF;
+                break;
+            case 1:
+                p_crrnt = &mrkrT;
+                break;
         }
-
+        
         p_crrnt->m_coordinates.reserve(size);
         p_crrnt->m_mass.reserve(size);
         for (int i = 0; i < size && !fin.eof(); i++)
         {
             std::string buf;
             fin >> buf;
-       
+            
             boost::tokenizer<> tk(buf);
-
+            
             for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
             {
                 CPPL::dcovector v(3);
-
+                
                 v(0) = boost::lexical_cast<double>(*it++);
                 v(1) = boost::lexical_cast<double>(*it++);
                 v(2) = boost::lexical_cast<double>(*it++);
-
+                
                 p_crrnt->m_coordinates.push_back(v);
                 p_crrnt->m_mass.push_back(boost::lexical_cast<double>(*it++));
             }
@@ -88,7 +88,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     }
     fin.close();
 }
-    
+
 int main(int argc, char *argv[])
 {
 	Cluster f, t;
@@ -96,11 +96,11 @@ int main(int argc, char *argv[])
 	motionCaputure(f.G, t.G);
     display(f.G);
     display(t.G);
-
+    
     f.pct();
     std::cout << "==========================" << std::endl;
 	t.pct();
- //   display(f, t);
- //   
+    //   display(f, t);
+    //   
     return 0;
 }

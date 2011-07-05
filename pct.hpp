@@ -64,7 +64,7 @@ public:
         std::vector<CPPL::dcovector> temp; //G-C
         CPPL::dgematrix R(3,3);
         
-       //転置R作り
+        //転置R作り
         for(int i=0; i<3; i++)
         {
             for(int j=0; j<3; j++)
@@ -97,30 +97,31 @@ public:
  */
 class Cluster
 {
-//private:
+    //private:
 public: // デバッグ用，本当はprivate
     CPPL::dcovector wFact; //!< 質量重心
     std::vector<CPPL::dcovector> P; //!< 慣性テンソル行列を生成するためのP(t)
     CPPL::dgematrix I; //!<慣性テンソル行列I(t)
     
     CPPL::dcovector pos;
-
+    
     void weightFactor(); /// 質量重心を求める
     void createP(); /// 慣性テンソル行列を生成するためのP(t)iを求める
     void createTensor(); /// 慣性テンソル行列を生成するためのP(t)iを求める
+    void redistributionMass();///質量再分配
 public:
     LoCoord L; //!< ローカル座標群
     GrCoord G; //!< グローバル座標群
-
+    
     CPPL::dcovector cm; //!< 質量重心
-
+    
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
-
+    
     void pct(); /// PCTの計算
     
     void createLocalCoordinates(std::vector<CPPL::dcovector> &vr);
-
+    
     void displayP();
 };
 
