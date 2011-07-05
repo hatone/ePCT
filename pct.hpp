@@ -108,7 +108,7 @@ public: // デバッグ用，本当はprivate
     void weightFactor(); /// 質量重心を求める
     void createP(); /// 慣性テンソル行列を生成するためのP(t)iを求める
     void createTensor(); /// 慣性テンソル行列を生成するためのP(t)iを求める
-    void redistributionMass();///質量再分配
+
 public:
     LoCoord L; //!< ローカル座標群
     GrCoord G; //!< グローバル座標群
@@ -119,6 +119,7 @@ public:
     ~Cluster(); /// Clusterのデストラクタ
     
     void pct(); /// PCTの計算
+    void redistributionMass(Cluster &c);///質量再分配
     
     void createLocalCoordinates(std::vector<CPPL::dcovector> &vr);
     

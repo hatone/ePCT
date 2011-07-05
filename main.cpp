@@ -91,7 +91,9 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 
 int main(int argc, char *argv[])
 {
-	Cluster f, t;
+	Cluster k_f,k_t;
+    Cluster f, t;
+    
     
 	motionCaputure(f.G, t.G);
     display(f.G);
@@ -100,6 +102,14 @@ int main(int argc, char *argv[])
     f.pct();
     std::cout << "==========================" << std::endl;
 	t.pct();
+    
+    //とりあえず今だけ。1回だけ実行したい。
+    k_f = f;
+    k_t = t;
+    
+    f.redistributionMass(k_f);
+    
+    
     //   display(f, t);
     //   
     return 0;
