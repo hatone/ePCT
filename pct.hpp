@@ -102,12 +102,14 @@ public: // デバッグ用，本当はprivate
     CPPL::dcovector wFact; //!< 質量重心
     std::vector<CPPL::dcovector> P; //!< 慣性テンソル行列を生成するためのP(t)
     CPPL::dgematrix I; //!<慣性テンソル行列I(t)
-    
+    std::vector<double> wr, wi; //固有値 実数wr 虚数wi
+    std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
     CPPL::dcovector pos;
     
     void weightFactor(); /// 質量重心を求める
     void createP(); /// 慣性テンソル行列を生成するためのP(t)iを求める
     void createTensor(); /// 慣性テンソル行列を生成するためのP(t)iを求める
+    
 
 public:
     LoCoord L; //!< ローカル座標群

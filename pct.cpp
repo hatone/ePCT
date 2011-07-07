@@ -3,6 +3,7 @@
  *  \brief 
  */
 #include "pct.hpp"
+#include <cmath>
 
 Cluster::Cluster()
 {
@@ -10,7 +11,7 @@ Cluster::Cluster()
     wFact.zero();
     I.resize(3, 3);
     I.zero();
-
+    
     pos.resize(3);
     pos.zero();
     cm.resize(3);
@@ -64,8 +65,7 @@ void Cluster::pct()
     std::cout << I << std::endl;
     
     //慣性テンソル行列の固有と算出
-    std::vector<double> wr, wi; //固有値 実数wr 虚数wi
-    std::vector<CPPL::dcovector> vr, vi;//固有ベクトル 実数vr 虚数vi
+    
     I.dgeev(wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
     
     //表示系
@@ -137,6 +137,54 @@ void Cluster::createTensor()
 
 void Cluster::redistributionMass(Cluster &C)
 {
+    typedef std::pair<double*, double> pd; // m_massのアドレスと距離
+    
+    //慣性主軸間距離(固有ベクトルと各グローバル座標の距離)を求める
+    std::vector <pd> pv;
+    
+    
+    for(size_t i=0; i< G.m_coordinates.size(); i++)
+    {
+        
+        double dst=0;//慣性主軸間距離
+        
+        
+        for(size_t j=0; j<3; j++)
+        {
+            dst+=abs( vr[j](0)*G.m_coordinates[i](0) +vr[j](1)*G.m_coordinates[i](1)+vr[j](2)*G.m_coordinates[i](2) ) / 
+            sqrt(G.m_coordinates[i](0)*G.m_coordinates[i](0)+G.m_coordinates[i](1)*G.m_coordinates[i](1)+G.m_coordinates[i](2)*G.m_coordinates[i](2));
+        }
+        
+         std::cout<<"s dst"<<i<<" "<<dst<<std::endl;
+        
+        int idx= -1;
+        for(size_t j=0; j<pv.size(); j++)
+        {
+        
+            if(dst >= pv[j].second)
+            {
+                idx=j;
+                break;
+            }
+        }
+        
+        if(idx==-1)
+        {
+            pv.push_back(pd(&G.m_mass[i], dst));
+        }
+        else 
+        {
+            std::vector<pd>::iterator it = pv.begin();	
+            advance(it,idx);
+            pv.insert(it,pd(&G.m_mass[i], dst));
+        }
+     }       
+    
+    for(size_t i=0; i< G.m_mass.size(); i++)
+    {
+        *pv[i].first = i/(G.m_mass.size()-1);
+    }
+            
     
     
 }
