@@ -6,6 +6,8 @@
 #ifndef _PCT_HPP_
 #define _PCT_HPP_
 
+
+
 #include <cpplapack/cpplapack.h>
 
 /*!
@@ -120,9 +122,11 @@ public:
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
+    std::vector<CPPL::dcovector> axis;//座標軸　始点が0、終点が1
+    
     void pct(); /// PCTの計算
     void redistributionMass(Cluster &c);///質量再分配
-    
+    CPPL::dcovector calcAxsis(Cluster F,Cluster T);
     void createLocalCoordinates(std::vector<CPPL::dcovector> &vr);
     
     void displayP();

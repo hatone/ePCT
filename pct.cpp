@@ -4,6 +4,7 @@
  */
 #include "pct.hpp"
 #include <cmath>
+#define PI 3.141592653589793
 
 Cluster::Cluster()
 {
@@ -188,6 +189,41 @@ void Cluster::redistributionMass(Cluster &C)
     
     
 }
+
+CPPL::dcovector Cluster::calcAxsis(Cluster F,Cluster T)
+{
+    //初期化
+    std::vector<CPPL::dcovector> Faxis;
+    std::vector<CPPL::dcovector> Taxis;
+    CPPL::dcovector Fdist;
+    CPPL::dcovector Tdist;
+    CPPL::dcovector angle;
+    
+    
+    for(size_t i=0; i<2; i++)
+    {
+        Faxis[i].resize(3);
+        Faxis[i].zero();
+        Taxis[i].resize(3);
+        Taxis[i].zero();
+    }
+    
+    //原点へ。軸の始点と終点をずらす
+    Faxis[1]=F.axis[1]-F.axis[0];
+    Taxis[1]=T.axis[1]-T.axis[0];
+    
+    //軸の距離を求める&&角度を求める
+    for(size_t i=0; i<3; i++)
+    {
+        Fdist(i)= sqrt(Faxis[1](i)*Faxis[1](i));
+        Tdist(i)= sqrt(Taxis[1](i)*Taxis[1](i));
+        
+        angle(i)= acos(Fdist(i)/Tdist(i))* 180.0 / PI;
+    }
+    
+    return angle;
+}
+
 
 void Cluster::displayP()
 {
