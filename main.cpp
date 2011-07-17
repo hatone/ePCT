@@ -50,13 +50,20 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
     std::ifstream fin(fileName.c_str());
     for (int i = 0; !fin.eof(); i++)
     {
+        std::cout<<"i "<<i<<std::endl;
         std::string buf;
         fin >> buf;
-
+        std::cout<<"buf "<<buf<<std::endl;
+        
         boost::char_separator<char> dl(",");
-        boost::tokenizer<boost::char_separator<char>> tk(buf, dl);
-        boost::tokenizer<boost::char_separator<char>>::iterator it = tk.begin();
+        
+    
+        boost::tokenizer<boost::char_separator<char> > tk(buf, dl);
+            
+        boost::tokenizer<boost::char_separator<char> >::iterator it = tk.begin();
         CPPL::dcovector v(3);
+//        v(0) = boost::lexical_cast<double>("123.45");
+
         v(0) = boost::lexical_cast<double>(*it++);
         v(1) = boost::lexical_cast<double>(*it++);
         v(2) = boost::lexical_cast<double>(*it++);
@@ -157,7 +164,7 @@ int main(int argc, char *argv[])
     k_t = t;
     
     f.redistributionMass(k_f);
-    
+    t.redistributionMass(k_t);
     
     //   display(f, t);
     //   
