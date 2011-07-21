@@ -6,7 +6,7 @@
  *
  */
 Camera::Camera():
-pos(cv::Vec3f(0.0f, 0.0f, 0.0f)),hViewAngle(BUFFALO_BSW13K05H::HORIZONTAL_ANGLE_OF_VIEW),vViewAngle(BUFFALO_BSW13K05H::VERTICAL_ANGLE_OF_VIEW),
+pos(cv::Vec3f(0.0f, 0.0f, 0.0f)),hViewAngle(BUFFALO_BSW13K05H::ANGLE_OF_VIEW_H),vViewAngle(BUFFALO_BSW13K05H::ANGLE_OF_VIEW_V),
 cameraMatrix(cv::Mat(3, 3, CV_64FC1)),distCorffs(cv::Mat(4, 1, CV_64FC1))
 {
 }
@@ -47,6 +47,12 @@ void Camera::setUndistortParam()
 Marker::Marker():
 baseLen(BUFFALO_BSW13K05H::DISTANCE)
 {
+    crrntPos.reserve(MARKER_IDX_NUM);
+    prvPos.resize(MARKER_IDX_NUM);
+    crrntPosL.reserve(MARKER_IDX_NUM);
+    prvPosL.resize(MARKER_IDX_NUM);
+    crrntPosR.reserve(MARKER_IDX_NUM);
+    prvPosR.resize(MARKER_IDX_NUM);
 }
 
 /*!
@@ -54,6 +60,30 @@ baseLen(BUFFALO_BSW13K05H::DISTANCE)
  */
 Marker::~Marker()
 {
+}
+
+/*!
+ *  \param idx マーカのラベルの添字
+ *  \param pos マウスでクリックした座標
+ */
+void Marker::setOneMarkerLabel(int idx, cv::Point2i pos, std::vector<cv::Point2f> &crrnt, std::vector<cv::Point2f> &prv)
+{
+    float min = FLT_MAX;
+    int _idx;
+
+    for (size_t i = 0; i < crrnt.size(); i++)
+    {
+        //std::cout << "  " << crrnt[i].x << ", " << crrnt[i].y << std::endl;
+        //std::cout << "    " << distance(crrnt[i], pos) << std::endl;
+
+        if (min > distance(crrnt[i], pos))
+        {
+            min = distance(crrnt[i], pos);
+            _idx = i;
+        }
+    }
+
+    prv[idx] = crrnt[_idx];
 }
 
 /*!
@@ -66,11 +96,15 @@ void Marker::calcPos(Camera &camL, Camera &camR)
     // 入力画像からマーカの検出
     getPos2D(camL.srcIm, camL.dstIm, crrntPosL);
     getPos2D(camR.srcIm, camR.dstIm, crrntPosR);
-
+    
     // マーカのラベル付け
+    setMarkerLabel(prvPosL, crrntPosL);
+    setMarkerLabel(prvPosR, crrntPosR);
 
     // マーカ座標の計算
-    crrntPos.push_back(triangulation(M_PI/3.0f, M_PI/6.0f, M_PI/3.0f));
+    imRows = camL.srcIm.rows;
+    imCols = camL.srcIm.cols;
+    getPos3D();
 }
 
 /*!
@@ -113,6 +147,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
 
     // マーカ候補の重心を求める
     cv::Mat centerIm = fusionIm;
+    pos.clear();
     pos.reserve(lblBS.GetNumOfResultRegions());
     for (int i = 0; i < lblBS.GetNumOfResultRegions(); i++)
     {
@@ -153,6 +188,48 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
 }
 
 /*!
+ *
+ */
+void Marker::getPos3D()
+{
+    std::cout << "getPos3D" << std::endl;
+
+    std::cout << crrntPosL[0].x << ", " << crrntPosL[0].y << " - " << crrntPosR[0].x << ", " << crrntPosR[0].y << std::endl;
+    //std::cout << pos2rad(crrntPosL[0].x) << ", " << pos2rad(crrntPosL[0].y) << " - " << pos2rad(crrntPosR[0].x) << ", " << pos2rad(crrntPosR[0].y) << std::endl;
+    //float r = pos2rad(0, imRows, 50.0f);
+    //std::cout << r << " = " << rad2deg(r) << std::endl;
+}
+
+/*!
+ *  \param prv   ラベルづけされたマーカ座標
+ *  \param crrnt 画像から取得したマーカ座標
+ */
+void Marker::setMarkerLabel(std::vector<cv::Point2f> &prv, std::vector<cv::Point2f> &crrnt)
+{
+    std::vector<cv::Point2f> pos(prv.size(), cv::Point2f(0.0f, 0.0f));
+
+    for (size_t i = 0; i < prv.size(); i++)
+    {
+        float min = FLT_MAX;
+        int idx;
+        for (size_t j = 0; j < crrnt.size(); j++)
+        {
+            if (min > distance(crrnt[j], prv[i]))
+            {
+                min = distance(crrnt[j], prv[i]);
+                idx = j;
+            }
+        }
+        pos[i] = crrnt[idx];
+    }
+    crrnt = pos;
+    prv = crrnt;
+
+    //crrnt.swap(pos);
+    //pos.swap(prv);
+}
+
+/*!
  *  \param A 底辺左端の座標
  *  \param B 底辺右端の座標
  *  \param baseLen 底辺の長さ
@@ -168,4 +245,9 @@ cv::Vec3f Marker::triangulation(float angLh, float angLv, float angRh)
     float Yc = (sin(angLv)/sin(angCv)) * Zc;
 
     return cv::Vec3f(Xc, Yc, Zc);
+}
+
+MARKER_IDX getMarkerIdx(cv::Point2i pos)
+{
+
 }
