@@ -191,27 +191,32 @@ void Cluster::redistributionMass(Cluster &C)
 }
 
 void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
-{
+{   
     //初期化
-    std::vector<CPPL::dcovector> Faxis;
-    std::vector<CPPL::dcovector> Taxis;
-    CPPL::dcovector Fdist;
-    CPPL::dcovector Tdist;
+    std::vector<CPPL::dcovector> Faxis(2, CPPL::dcovector(3));
+    std::vector<CPPL::dcovector> Taxis(2, CPPL::dcovector(3));
+    CPPL::dcovector Fdist(3);
+    CPPL::dcovector Tdist(3);
     
     //軸を算出
     F.createFAxsis();
+    Faxis = F.axis;
+    Taxis = T.axis;
     
     for(size_t i=0; i<2; i++)
     {
-        Faxis[i].resize(3);
+
+//        Faxis[i].resize(3);
         Faxis[i].zero();
-        Taxis[i].resize(3);
+//        Taxis[i].resize(3);
         Taxis[i].zero();
     }
     
     //原点へ。軸の始点と終点をずらす
-    Faxis[1]=F.axis[1]-F.axis[0];
-    Taxis[1]=T.axis[1]-T.axis[0];
+//    Faxis[1]=F.axis[1]-F.axis[0];
+//    Taxis[1]=T.axis[1]-T.axis[0];
+    Faxis[1] -= Faxis[0];
+    Taxis[1] -= Taxis[0];
     
     //軸の距離を求める&&角度を求める
     for(size_t i=0; i<3; i++)
@@ -219,7 +224,7 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
         Fdist(i)= sqrt(Faxis[1](i)*Faxis[1](i));
         Tdist(i)= sqrt(Taxis[1](i)*Taxis[1](i));
         
-        angle(i)= acos(Fdist(i)/Tdist(i))* 180.0 / PI;
+        //angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
     }
     
 }

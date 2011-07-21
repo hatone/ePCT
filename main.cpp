@@ -21,7 +21,7 @@ const int MARKER_NUM = 23;
 const std::string fileName("s1c1.tsv");
 
 
-CPPL::dcovector angle;//角度
+CPPL::dcovector angle(3);//角度
 
 void display(Cluster f, Cluster t)
 {
@@ -167,7 +167,6 @@ int main(int argc, char *argv[])
 {
 	Cluster k_f,k_t;
     Cluster f, t;
-    
     
 	motionCaputure(f.G, t.G);
 

@@ -133,7 +133,7 @@ public:
     void displayP();
 };
 
-void calcAxsis(Cluster F,Cluster T, CPPL::dcovector &angle);
+void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle);
 
 
 #endif //  _PCT_HPP_
