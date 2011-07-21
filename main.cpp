@@ -16,8 +16,12 @@
 
 #include "pct.hpp"
 
+
 const int MARKER_NUM = 23;
 const std::string fileName("s1c1.tsv");
+
+
+CPPL::dcovector angle;//角度
 
 void display(Cluster f, Cluster t)
 {
@@ -48,7 +52,7 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 {
     // そのうち読み込みをモーションキャプチャに合わせないとね
 
-    std::ifstream fin(fileName);
+    std::ifstream fin("s1c1.tsv");
     std::string buf;
 
     for (int i = 0; i < MARKER_NUM; i++)
@@ -170,16 +174,19 @@ int main(int argc, char *argv[])
     display(f.G);
     display(t.G);
 
-    return 0;
 
     f.pct();
     std::cout << "==========================" << std::endl;
 	t.pct();
     
+    calcAxsis(f, t, angle);
+    
     //とりあえず今だけ。1回だけ実行したい。
     k_f = f;
     k_t = t;
     
+    
+        
     f.redistributionMass(k_f);
     t.redistributionMass(k_t);
     

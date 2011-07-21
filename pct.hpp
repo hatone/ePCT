@@ -126,11 +126,14 @@ public:
     
     void pct(); /// PCTの計算
     void redistributionMass(Cluster &c);///質量再分配
-    CPPL::dcovector calcAxsis(Cluster F,Cluster T);
+    void createFAxsis();
+    void createTAxsis();
     void createLocalCoordinates(std::vector<CPPL::dcovector> &vr);
     
     void displayP();
 };
+
+void calcAxsis(Cluster F,Cluster T, CPPL::dcovector &angle);
 
 
 #endif //  _PCT_HPP_

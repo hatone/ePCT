@@ -190,17 +190,16 @@ void Cluster::redistributionMass(Cluster &C)
     
 }
 
-CPPL::dcovector Cluster::calcAxsis(Cluster F,Cluster T)
+void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
 {
     //初期化
     std::vector<CPPL::dcovector> Faxis;
     std::vector<CPPL::dcovector> Taxis;
     CPPL::dcovector Fdist;
     CPPL::dcovector Tdist;
-    CPPL::dcovector angle;
     
-    
-    
+    //軸を算出
+    F.createFAxsis();
     
     for(size_t i=0; i<2; i++)
     {
@@ -223,9 +222,18 @@ CPPL::dcovector Cluster::calcAxsis(Cluster F,Cluster T)
         angle(i)= acos(Fdist(i)/Tdist(i))* 180.0 / PI;
     }
     
-    return angle;
 }
 
+
+void Cluster::createFAxsis()
+{
+    std::cout<<" test"<<std::endl;
+}
+
+void Cluster::createTAxsis()
+{
+    std::cout<<"test"<<std::endl;
+}
 
 void Cluster::displayP()
 {
