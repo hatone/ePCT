@@ -16,7 +16,8 @@
 
 #include "pct.hpp"
 
-const std::string fileName("ct.txt");
+const int MARKER_NUM = 23;
+const std::string fileName("s1c1.tsv");
 
 void display(Cluster f, Cluster t)
 {
@@ -47,101 +48,115 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 {
     // そのうち読み込みをモーションキャプチャに合わせないとね
 
-    std::ifstream fin(fileName.c_str());
-    for (int i = 0; !fin.eof(); i++)
+    std::ifstream fin(fileName);
+    std::string buf;
+
+    for (int i = 0; i < MARKER_NUM; i++)
     {
-        std::cout<<"i "<<i<<std::endl;
-        std::string buf;
-        fin >> buf;
-        std::cout<<"buf "<<buf<<std::endl;
-        
-        boost::char_separator<char> dl(",");
-        
-    
-        boost::tokenizer<boost::char_separator<char> > tk(buf, dl);
-            
-        boost::tokenizer<boost::char_separator<char> >::iterator it = tk.begin();
         CPPL::dcovector v(3);
-//        v(0) = boost::lexical_cast<double>("123.45");
+        double d;
+        fin >> d;
+        v(0) = boost::lexical_cast<double>(d);
+        fin >> d;
+        v(2) = boost::lexical_cast<double>(d);
+        fin >> d;
+        v(1) = boost::lexical_cast<double>(d);
 
-        v(0) = boost::lexical_cast<double>(*it++);
-        v(1) = boost::lexical_cast<double>(*it++);
-        v(2) = boost::lexical_cast<double>(*it++);
 
+
+        //for (int j = 0; j < 3; j++)
+        //{
+        //    fin >> d;
+        //    v(j) = boost::lexical_cast<double>(d);
+        //}
         switch (i)
         {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 15:
-        case 16:
-        case 17:
-            mrkrF.m_coordinates.push_back(v);
-            mrkrF.m_mass.push_back(1.0);
-            break;
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        case 14:
-        case 18:
-        case 19:
-        case 20:
-        case 21:
-        case 22:
-            mrkrT.m_coordinates.push_back(v);
-            mrkrT.m_mass.push_back(1.0);
-            break;
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 15:
+            case 16:
+            case 17:
+                mrkrF.m_coordinates.push_back(v);
+                mrkrF.m_mass.push_back(1.0);
+                break;
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+            case 18:
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+                mrkrT.m_coordinates.push_back(v);
+                mrkrT.m_mass.push_back(1.0);
+                break;
         }
     }
 
-    //// 適当なグローバル座標群を作成
     //std::ifstream fin(fileName.c_str());
-    //GrCoord *p_crrnt;
-    //int size = 4;
-    //
-    //for (int i = 0; i < 2; i++)
+    //for (int i = 0; !fin.eof(); i++)
     //{
+    //    std::cout<<"i "<<i<<std::endl;
+    //    std::string buf;
+    //    fin >> buf;
+    //    std::cout<<"buf "<<buf<<std::endl;
+    //    
+    //    boost::char_separator<char> dl(",");
+    //    
+    //
+    //    boost::tokenizer<boost::char_separator<char> > tk(buf, dl);
+    //        
+    //    boost::tokenizer<boost::char_separator<char> >::iterator it = tk.begin();
+    //    CPPL::dcovector v(3);
+
+    //    v(0) = boost::lexical_cast<double>(*it++);
+    //    v(1) = boost::lexical_cast<double>(*it++);
+    //    v(2) = boost::lexical_cast<double>(*it++);
+
     //    switch (i)
     //    {
-    //        case 0:
-    //            p_crrnt = &mrkrF;
-    //            break;
-    //        case 1:
-    //            p_crrnt = &mrkrT;
-    //            break;
-    //    }
-    //    
-    //    p_crrnt->m_coordinates.reserve(size);
-    //    p_crrnt->m_mass.reserve(size);
-    //    for (int i = 0; i < size && !fin.eof(); i++)
-    //    {
-    //        std::string buf;
-    //        fin >> buf;
-    //        
-    //        boost::tokenizer<> tk(buf);
-    //        
-    //        for (boost::tokenizer<>::iterator it = tk.begin(); it != tk.end();)
-    //        {
-    //            CPPL::dcovector v(3);
-    //            
-    //            v(0) = boost::lexical_cast<double>(*it++);
-    //            v(1) = boost::lexical_cast<double>(*it++);
-    //            v(2) = boost::lexical_cast<double>(*it++);
-    //            
-    //            p_crrnt->m_coordinates.push_back(v);
-    //            p_crrnt->m_mass.push_back(boost::lexical_cast<double>(*it++));
-    //        }
+    //    case 0:
+    //    case 1:
+    //    case 2:
+    //    case 3:
+    //    case 4:
+    //    case 5:
+    //    case 6:
+    //    case 7:
+    //    case 8:
+    //    case 15:
+    //    case 16:
+    //    case 17:
+    //        mrkrF.m_coordinates.push_back(v);
+    //        mrkrF.m_mass.push_back(1.0);
+    //        break;
+    //    case 9:
+    //    case 10:
+    //    case 11:
+    //    case 12:
+    //    case 13:
+    //    case 14:
+    //    case 18:
+    //    case 19:
+    //    case 20:
+    //    case 21:
+    //    case 22:
+    //        mrkrT.m_coordinates.push_back(v);
+    //        mrkrT.m_mass.push_back(1.0);
+    //        break;
     //    }
     //}
-    //fin.close();
+
 }
 
 int main(int argc, char *argv[])
@@ -154,6 +169,8 @@ int main(int argc, char *argv[])
 
     display(f.G);
     display(t.G);
+
+    return 0;
 
     f.pct();
     std::cout << "==========================" << std::endl;
