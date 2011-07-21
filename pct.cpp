@@ -17,6 +17,8 @@ Cluster::Cluster()
     pos.zero();
     cm.resize(3);
     cm.zero();
+
+    axis.resize(2, CPPL::dcovector(3));
 }
 
 Cluster::~Cluster()
@@ -193,51 +195,56 @@ void Cluster::redistributionMass(Cluster &C)
 void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
 {   
     //初期化
-    std::vector<CPPL::dcovector> Faxis(2, CPPL::dcovector(3));
-    std::vector<CPPL::dcovector> Taxis(2, CPPL::dcovector(3));
+    //std::vector<CPPL::dcovector> Faxis(2, CPPL::dcovector(3));
+    //std::vector<CPPL::dcovector> Taxis(2, CPPL::dcovector(3));
     CPPL::dcovector Fdist(3);
     CPPL::dcovector Tdist(3);
     
     //軸を算出
     F.createFAxsis();
-    Faxis = F.axis;
-    Taxis = T.axis;
-    
-    for(size_t i=0; i<2; i++)
-    {
-
-//        Faxis[i].resize(3);
-        Faxis[i].zero();
-//        Taxis[i].resize(3);
-        Taxis[i].zero();
-    }
+    T.createFAxsis();
+    //Faxis = F.axis;
+    //Taxis = T.axis;
     
     //原点へ。軸の始点と終点をずらす
 //    Faxis[1]=F.axis[1]-F.axis[0];
 //    Taxis[1]=T.axis[1]-T.axis[0];
-    Faxis[1] -= Faxis[0];
-    Taxis[1] -= Taxis[0];
+    //Faxis[1] -= Faxis[0];
+    //Taxis[1] -= Taxis[0];
+    F.axis[1] -= F.axis[0];
+    T.axis[1] -= T.axis[0];
     
     //軸の距離を求める&&角度を求める
     for(size_t i=0; i<3; i++)
     {
-        Fdist(i)= sqrt(Faxis[1](i)*Faxis[1](i));
-        Tdist(i)= sqrt(Taxis[1](i)*Taxis[1](i));
+        Fdist(i)= sqrt(F.axis[1](i)*F.axis[1](i));
+        Tdist(i)= sqrt(T.axis[1](i)*T.axis[1](i));
         
-        //angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
+        angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
     }
-    
 }
 
 
 void Cluster::createFAxsis()
 {
     std::cout<<" test"<<std::endl;
+    axis[0](0) = 3;
+    axis[0](1) = 4;
+    axis[0](2) = 5;
+    axis[1](0) = 0;
+    axis[1](1) = 1;
+    axis[1](2) = 2;
 }
 
 void Cluster::createTAxsis()
 {
     std::cout<<"test"<<std::endl;
+    axis[0](0) = 3;
+    axis[0](1) = 4;
+    axis[0](2) = 5;
+    axis[1](0) = 0;
+    axis[1](1) = 1;
+    axis[1](2) = 2;
 }
 
 void Cluster::displayP()
