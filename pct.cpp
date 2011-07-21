@@ -6,6 +6,37 @@
 #include <cmath>
 #define PI 3.141592653589793
 
+
+
+enum MARKER_IDX_F {
+FP1,
+FP2,
+FP3,
+FL1,
+FL2,
+FL3,
+FA1,
+FA2,
+FA3,
+GRT_TROC,		
+MED_CON,		
+LAT_CON
+};
+
+enum MARKER_IDX_T {
+TL1,
+TL2,		
+TL3,
+TA1,
+TA2,
+TA3,
+LAT_MALL,
+MED_MALL,
+FIFTH_MTAR,
+IL_CREST,
+HEEL
+};
+
 Cluster::Cluster()
 {
     wFact.resize(3);
@@ -195,22 +226,15 @@ void Cluster::redistributionMass(Cluster &C)
 void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
 {   
     //初期化
-    //std::vector<CPPL::dcovector> Faxis(2, CPPL::dcovector(3));
-    //std::vector<CPPL::dcovector> Taxis(2, CPPL::dcovector(3));
     CPPL::dcovector Fdist(3);
     CPPL::dcovector Tdist(3);
     
     //軸を算出
     F.createFAxsis();
-    T.createFAxsis();
-    //Faxis = F.axis;
-    //Taxis = T.axis;
+    T.createTAxsis();
+
     
     //原点へ。軸の始点と終点をずらす
-//    Faxis[1]=F.axis[1]-F.axis[0];
-//    Taxis[1]=T.axis[1]-T.axis[0];
-    //Faxis[1] -= Faxis[0];
-    //Taxis[1] -= Taxis[0];
     F.axis[1] -= F.axis[0];
     T.axis[1] -= T.axis[0];
     
@@ -219,32 +243,76 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
     {
         Fdist(i)= sqrt(F.axis[1](i)*F.axis[1](i));
         Tdist(i)= sqrt(T.axis[1](i)*T.axis[1](i));
-        
+
         angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
     }
+    
+    
 }
 
 
 void Cluster::createFAxsis()
 {
-    std::cout<<" test"<<std::endl;
-    axis[0](0) = 3;
-    axis[0](1) = 4;
-    axis[0](2) = 5;
-    axis[1](0) = 0;
-    axis[1](1) = 1;
-    axis[1](2) = 2;
+    std::cout << "createFAxis" << std::endl;
+    
+    CPPL::dcovector vMid(3);
+    CPPL::dcovector vS(3);
+    CPPL::dcovector vX(3);
+    CPPL::dcovector vY(3);
+    CPPL::dcovector vZ(3);
+
+    vMid=(L.m_coordinates[MED_CON]+L.m_coordinates[LAT_CON])/2.0;
+    std::cout << "MED_COM = \n" << L.m_coordinates[MED_CON] << std::endl;
+    std::cout << "LAT_COM = \n" << L.m_coordinates[LAT_CON] << std::endl;
+    std::cout<<"vMid\n"<<vMid<<std::endl;
+    vS=L.m_coordinates[LAT_CON];
+    vX=L.m_coordinates[MED_CON];
+    vY=L.m_coordinates[GRT_TROC];
+
+    std::cout << "posS = " << std::endl;
+    std::cout << vS << std::endl;
+    std::cout << "posX = " << std::endl;
+    std::cout << vX << std::endl;
+    std::cout << "posY = " << std::endl;
+    std::cout << vY << std::endl;
+
+    vX -= vS;
+    vY -= vS;
+    vZ = cross(vX, vY);
+    
+    std::cout << "vecX = " << std::endl;
+    std::cout << vX/15.850 << std::endl;
+    std::cout << "vecY = " << std::endl;
+    std::cout << vY/47.9211 << std::endl;
+    std::cout << "vecZ = " << std::endl;
+    std::cout << vZ/44.5952 << std::endl;
+    
+    vX = cross(vY, vZ);
+
+    std::cout << "vecX = " << std::endl;
+    std::cout << vX/25.1181 << std::endl;
 }
 
 void Cluster::createTAxsis()
 {
+    CPPL::dcovector mid(3);
+    CPPL::dcovector s(3);
+    CPPL::dcovector x(3);
+    CPPL::dcovector y(3);
+    CPPL::dcovector z(3);
+    //lat 6
+    //med 7
+    //5th_mtar 8		
+    //il_crest 9			
+    //heel 10
+    
     std::cout<<"test"<<std::endl;
-    axis[0](0) = 3;
-    axis[0](1) = 4;
-    axis[0](2) = 5;
+    axis[0](0) = 0;
+    axis[0](1) = 0;
+    axis[0](2) = 0;
     axis[1](0) = 0;
-    axis[1](1) = 1;
-    axis[1](2) = 2;
+    axis[1](1) = 10;
+    axis[1](2) = 0;
 }
 
 void Cluster::displayP()

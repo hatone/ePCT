@@ -112,6 +112,20 @@ public: // デバッグ用，本当はprivate
     void createP(); /// 慣性テンソル行列を生成するためのP(t)iを求める
     void createTensor(); /// 慣性テンソル行列を生成するためのP(t)iを求める
     
+    /*!
+     *
+     */
+    inline CPPL::dcovector cross(CPPL::dcovector A, CPPL::dcovector B)
+    {
+        CPPL::dcovector v(3);
+        
+        v(0) = A(2)*B(3) - A(3)*B(2);
+        v(1) = A(3)*B(1) - A(1)*B(3);
+        v(2) = A(1)*B(2) - A(2)*B(1);
+        
+        return v;
+    }
+    
 
 public:
     LoCoord L; //!< ローカル座標群
@@ -122,7 +136,7 @@ public:
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
-    std::vector<CPPL::dcovector> axis;//座標軸　始点が0、終点が1
+    std::vector<CPPL::dcovector> axis;//座標軸（0始点　1終点)
     
     void pct(); /// PCTの計算
     void redistributionMass(Cluster &c);///質量再分配
