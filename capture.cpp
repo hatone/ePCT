@@ -195,9 +195,8 @@ void Marker::getPos3D()
     std::cout << "getPos3D" << std::endl;
 
     std::cout << crrntPosL[0].x << ", " << crrntPosL[0].y << " - " << crrntPosR[0].x << ", " << crrntPosR[0].y << std::endl;
-    //std::cout << pos2rad(crrntPosL[0].x) << ", " << pos2rad(crrntPosL[0].y) << " - " << pos2rad(crrntPosR[0].x) << ", " << pos2rad(crrntPosR[0].y) << std::endl;
-    //float r = pos2rad(0, imRows, 50.0f);
-    //std::cout << r << " = " << rad2deg(r) << std::endl;
+    std::cout << rad2deg(pos2radH(crrntPosL[crrntPosL.size()-1].x)) << ", " << rad2deg(pos2radV(crrntPosL[crrntPosL.size()-1].y)) << std::endl;
+
 }
 
 /*!
