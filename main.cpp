@@ -175,11 +175,15 @@ int main(int argc, char *argv[])
 
 
     f.pct();
-    std::cout << "==========================" << std::endl;
 	t.pct();
+    std::cout << "==========================" << std::endl;
+
+    
     
     calcAxsis(f, t, angle, dist);
-    
+    std::cout<<angle<<std::endl; 
+    printf("%lf\n", angle(1));
+  
     //とりあえず今だけ。1回だけ実行したい。
     k_f = f;
     k_t = t;

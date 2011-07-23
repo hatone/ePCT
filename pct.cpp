@@ -37,6 +37,35 @@ IL_CREST,
 HEEL
 };
 
+char *MARKER_NAME_F[] = {
+    "FP1",
+    "FP2",
+    "FP3",
+    "FL1",
+    "FL2",
+    "FL3",
+    "FA1",
+    "FA2",
+    "FA3",
+    "GRT_TROC",		
+    "MED_CON",		
+    "LAT_CON"
+};    
+
+char *MARKER_NAME_T[] = {
+    "TL1",
+    "TL2",		
+    "TL3",
+    "TA1",
+    "TA2",
+    "TA3",
+    "LAT_MALL",
+    "MED_MALL",
+    "FIFTH_MTAR",
+    "IL_CREST",
+    "HEEL"
+};
+
 Cluster::Cluster()
 {
     wFact.resize(3);
@@ -114,8 +143,10 @@ void Cluster::pct()
     std::cout << "Local Coordinate -- " << std::endl;
     for (size_t i = 0; i < L.m_coordinates.size(); i++)
     {
-        std::cout << L.m_coordinates[i] << std::endl;
-        std::cout << "--" << std::endl;
+//        printf("glVertex3d( %f, %f, %f);\n", L.m_coordinates[i](0),  L.m_coordinates[i](1),  L.m_coordinates[i](2));
+        
+//        std::cout << L.m_coordinates[i] << std::endl;
+//        std::cout << "--" << std::endl;
     }
 }
 
@@ -230,13 +261,34 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle,CPPL::dcovector &di
     CPPL::dcovector Tdist(3);
     
     //軸を算出
+    for (int i = 0; i < 12; i++)
+    {
+        std::cout << MARKER_NAME_F[i] << std::endl;
+        std::cout << F.L.m_coordinates[i] << std::endl;
+    }
     F.createFAxsis();
+    for (int i = 0; i < 11; i++)
+    {
+        std::cout << MARKER_NAME_T[i] << std::endl;
+        std::cout << T.L.m_coordinates[i] << std::endl;
+    }
     T.createTAxsis();
 
+    std::cout<<"F(0)"<<F.axis[0]<< std::endl;
     for(size_t i=0; i<3; i++)
     {
         dist(i)=sqrt( (F.axis[0](i)-T.axis[0](i)) * (F.axis[0](i)-T.axis[0](i)) );
     }
+    
+    F.axis[0](0) = F.axis[0](1) = F.axis[0](2) = 0.0;
+    F.axis[1](0) = 0.0;
+    F.axis[1](1) = 1.0;
+    F.axis[1](2) = 0.0;
+   
+    T.axis[0](0) = T.axis[0](1) = T.axis[0](2) = 0.0;
+    T.axis[1](0) = 1.0;
+    T.axis[1](1) = 0.0;
+    T.axis[1](2) = 0.0;
     
     
     //原点へ。軸の始点と終点をずらす
@@ -267,26 +319,18 @@ void Cluster::createFAxsis()
     CPPL::dcovector vZ(3);
 
     vMid=(L.m_coordinates[MED_CON]+L.m_coordinates[LAT_CON])/2.0;
-//    std::cout << "MED_COM = \n" << L.m_coordinates[MED_CON] << std::endl;
-//    std::cout << "LAT_COM = \n" << L.m_coordinates[LAT_CON] << std::endl;
-//    std::cout<<"vMid\n"<<vMid<<std::endl;
     vS=L.m_coordinates[LAT_CON];
     vX=L.m_coordinates[MED_CON];
     vY=L.m_coordinates[GRT_TROC];
 
     std::cout << "posS = " << std::endl;
     std::cout << vS << std::endl;
-//    std::cout << "posX = " << std::endl;
-//    std::cout << vX << std::endl;
-//    std::cout << "posY = " << std::endl;
-//    std::cout << vY << std::endl;
-
     vX -= vS;
     vY -= vS;
     vZ = cross(vX, vY);
     
-//    std::cout << "vecX = " << std::endl;
-//    std::cout << vX<< std::endl;
+    std::cout << "vecX = " << std::endl;
+    std::cout << vX<< std::endl;
     std::cout << "vecY = " << std::endl;
     std::cout << vY<< std::endl;
     std::cout << "vecZ = " << std::endl;
@@ -300,18 +344,20 @@ void Cluster::createFAxsis()
     vY -= vMid;
     vZ -= vMid;
     
+    axis[0]=vS;
+    axis[1]=vX+vY+vZ;
     
-    std::cout << "vecX = " << std::endl;
-    std::cout << vX << std::endl;
-    
-    
-    std::cout << "vMid = " << std::endl;
-    std::cout << vMid << std::endl;
-    
-    std::cout<< "LAT_CON =" << std::endl;
-    std::cout<<L.m_coordinates[LAT_CON]<<std::endl;
-    std::cout<< "MED_CON =" << std::endl;
-    std::cout<<L.m_coordinates[MED_CON]<<std::endl;
+//    std::cout << "vecX = " << std::endl;
+//    std::cout << vX << std::endl;
+//    
+//    
+//    std::cout << "vMid = " << std::endl;
+//    std::cout << vMid << std::endl;
+//    
+//    std::cout<< "LAT_CON =" << std::endl;
+//    std::cout<<L.m_coordinates[LAT_CON]<<std::endl;
+//    std::cout<< "MED_CON =" << std::endl;
+//    std::cout<<L.m_coordinates[MED_CON]<<std::endl;
     
 }
 
@@ -343,26 +389,29 @@ void Cluster::createTAxsis()
     vY -= vMid2;
     vZ -= vMid2;
     
-    std::cout << "posS = " << std::endl;
-    std::cout << vS << std::endl;
+    axis[0]=vS;
+    axis[1]=vX+vY+vZ;
     
-    std::cout << "vecY = " << std::endl;
-    std::cout << vY<< std::endl;
-    std::cout << "vecZ = " << std::endl;
-    std::cout << vZ << std::endl;    
-    std::cout << "vecX = " << std::endl;
-    std::cout << vX << std::endl;
-    
-    std::cout << "vMid2 = " << std::endl;
-    std::cout << vMid2 << std::endl;
-    
-    std::cout<< "TA1 =" << std::endl;
-    std::cout<<L.m_coordinates[TA1]<<std::endl;
-    
-    std::cout<< "LAT_MALL =" << std::endl;
-    std::cout<<L.m_coordinates[LAT_MALL]<<std::endl;
-    std::cout<< "MED_MALL =" << std::endl;
-    std::cout<<L.m_coordinates[MED_MALL]<<std::endl;
+//    std::cout << "posS = " << std::endl;
+//    std::cout << vS << std::endl;
+//    
+//    std::cout << "vecY = " << std::endl;
+//    std::cout << vY<< std::endl;
+//    std::cout << "vecZ = " << std::endl;
+//    std::cout << vZ << std::endl;    
+//    std::cout << "vecX = " << std::endl;
+//    std::cout << vX << std::endl;
+//    
+//    std::cout << "vMid2 = " << std::endl;
+//    std::cout << vMid2 << std::endl;
+//    
+//    std::cout<< "TA1 =" << std::endl;
+//    std::cout<<L.m_coordinates[TA1]<<std::endl;
+//    
+//    std::cout<< "LAT_MALL =" << std::endl;
+//    std::cout<<L.m_coordinates[LAT_MALL]<<std::endl;
+//    std::cout<< "MED_MALL =" << std::endl;
+//    std::cout<<L.m_coordinates[MED_MALL]<<std::endl;
 
 }
 
