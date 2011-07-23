@@ -22,7 +22,7 @@ const std::string fileName("s1c1.tsv");
 
 
 CPPL::dcovector angle(3);//角度
-
+CPPL::dcovector dist(3);//距離
 void display(Cluster f, Cluster t)
 {
     //ここに処理書く
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     std::cout << "==========================" << std::endl;
 	t.pct();
     
-    calcAxsis(f, t, angle);
+    calcAxsis(f, t, angle, dist);
     
     //とりあえず今だけ。1回だけ実行したい。
     k_f = f;

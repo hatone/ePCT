@@ -223,7 +223,7 @@ void Cluster::redistributionMass(Cluster &C)
     
 }
 
-void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
+void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle,CPPL::dcovector &dist)
 {   
     //初期化
     CPPL::dcovector Fdist(3);
@@ -233,6 +233,11 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle)
     F.createFAxsis();
     T.createTAxsis();
 
+    for(size_t i=0; i<3; i++)
+    {
+        dist(i)=sqrt( (F.axis[0](i)-T.axis[0](i)) * (F.axis[0](i)-T.axis[0](i)) );
+    }
+    
     
     //原点へ。軸の始点と終点をずらす
     F.axis[1] -= F.axis[0];
@@ -262,57 +267,103 @@ void Cluster::createFAxsis()
     CPPL::dcovector vZ(3);
 
     vMid=(L.m_coordinates[MED_CON]+L.m_coordinates[LAT_CON])/2.0;
-    std::cout << "MED_COM = \n" << L.m_coordinates[MED_CON] << std::endl;
-    std::cout << "LAT_COM = \n" << L.m_coordinates[LAT_CON] << std::endl;
-    std::cout<<"vMid\n"<<vMid<<std::endl;
+//    std::cout << "MED_COM = \n" << L.m_coordinates[MED_CON] << std::endl;
+//    std::cout << "LAT_COM = \n" << L.m_coordinates[LAT_CON] << std::endl;
+//    std::cout<<"vMid\n"<<vMid<<std::endl;
     vS=L.m_coordinates[LAT_CON];
     vX=L.m_coordinates[MED_CON];
     vY=L.m_coordinates[GRT_TROC];
 
     std::cout << "posS = " << std::endl;
     std::cout << vS << std::endl;
-    std::cout << "posX = " << std::endl;
-    std::cout << vX << std::endl;
-    std::cout << "posY = " << std::endl;
-    std::cout << vY << std::endl;
+//    std::cout << "posX = " << std::endl;
+//    std::cout << vX << std::endl;
+//    std::cout << "posY = " << std::endl;
+//    std::cout << vY << std::endl;
 
     vX -= vS;
     vY -= vS;
     vZ = cross(vX, vY);
     
-    std::cout << "vecX = " << std::endl;
-    std::cout << vX/15.850 << std::endl;
+//    std::cout << "vecX = " << std::endl;
+//    std::cout << vX<< std::endl;
     std::cout << "vecY = " << std::endl;
-    std::cout << vY/47.9211 << std::endl;
+    std::cout << vY<< std::endl;
     std::cout << "vecZ = " << std::endl;
-    std::cout << vZ/44.5952 << std::endl;
+    std::cout << vZ << std::endl;
     
-    vX = cross(vY, vZ);
+    vX = cross(vZ,vY);
 
+//中点へ移動
+    vS -= vMid;
+    vX -= vMid;
+    vY -= vMid;
+    vZ -= vMid;
+    
+    
     std::cout << "vecX = " << std::endl;
-    std::cout << vX/25.1181 << std::endl;
+    std::cout << vX << std::endl;
+    
+    
+    std::cout << "vMid = " << std::endl;
+    std::cout << vMid << std::endl;
+    
+    std::cout<< "LAT_CON =" << std::endl;
+    std::cout<<L.m_coordinates[LAT_CON]<<std::endl;
+    std::cout<< "MED_CON =" << std::endl;
+    std::cout<<L.m_coordinates[MED_CON]<<std::endl;
+    
 }
 
 void Cluster::createTAxsis()
 {
-    CPPL::dcovector mid(3);
-    CPPL::dcovector s(3);
-    CPPL::dcovector x(3);
-    CPPL::dcovector y(3);
-    CPPL::dcovector z(3);
-    //lat 6
-    //med 7
-    //5th_mtar 8		
-    //il_crest 9			
-    //heel 10
+        std::cout << "createTAxis" << std::endl;
+    CPPL::dcovector vMid(3);
+    CPPL::dcovector vMid2(3);
+    CPPL::dcovector vS(3);
+    CPPL::dcovector vX(3);
+    CPPL::dcovector vY(3);
+    CPPL::dcovector vZ(3);
     
-    std::cout<<"test"<<std::endl;
-    axis[0](0) = 0;
-    axis[0](1) = 0;
-    axis[0](2) = 0;
-    axis[1](0) = 0;
-    axis[1](1) = 10;
-    axis[1](2) = 0;
+    vMid=(L.m_coordinates[MED_MALL]+L.m_coordinates[LAT_MALL])/2.0;
+    vMid2=vMid;
+    
+    vMid2(1) = vY(1);
+    
+    vS=L.m_coordinates[LAT_MALL];
+    vX=L.m_coordinates[MED_MALL];
+    vY=L.m_coordinates[TA1];
+    
+    vY -= vS;
+    vZ = cross(vX, vY);
+    vX = cross(vZ, vY);
+    
+    vS -= vMid2;
+    vX -= vMid2;
+    vY -= vMid2;
+    vZ -= vMid2;
+    
+    std::cout << "posS = " << std::endl;
+    std::cout << vS << std::endl;
+    
+    std::cout << "vecY = " << std::endl;
+    std::cout << vY<< std::endl;
+    std::cout << "vecZ = " << std::endl;
+    std::cout << vZ << std::endl;    
+    std::cout << "vecX = " << std::endl;
+    std::cout << vX << std::endl;
+    
+    std::cout << "vMid2 = " << std::endl;
+    std::cout << vMid2 << std::endl;
+    
+    std::cout<< "TA1 =" << std::endl;
+    std::cout<<L.m_coordinates[TA1]<<std::endl;
+    
+    std::cout<< "LAT_MALL =" << std::endl;
+    std::cout<<L.m_coordinates[LAT_MALL]<<std::endl;
+    std::cout<< "MED_MALL =" << std::endl;
+    std::cout<<L.m_coordinates[MED_MALL]<<std::endl;
+
 }
 
 void Cluster::displayP()

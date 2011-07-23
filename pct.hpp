@@ -133,6 +133,10 @@ public:
     
     CPPL::dcovector cm; //!< 質量重心
     
+
+
+
+
     Cluster();  /// Clusterのコンストラクタ
     ~Cluster(); /// Clusterのデストラクタ
     
@@ -146,8 +150,6 @@ public:
     
     void displayP();
 };
-
-void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle);
-
+void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle, CPPL::dcovector &dist);
 
 #endif //  _PCT_HPP_
