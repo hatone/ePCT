@@ -26,14 +26,45 @@ char *markerName[] = {
 	"TA2",
 	"TA3",
 	"GRT_TROC", // 大転子
-	"MED_CON",	// 上の真ん中の凸
-	"LAT_CON",	// 小転子
-	"LAT_MALL", // 
-	"MED_MALL", // 
-	"fifTH_MTAR", // 
-	"IL_CREST",   // 
+	"MED_CON",	// 大腿骨内側顆
+	"LAT_CON",	// 大腿骨外側顆
+	"LAT_PLA",	// 外側プラトー
+	"MED_PLA",	// 内側プラトー
+	"LAT_MALL", // 脛骨外側顆
+	"MED_MALL", // 脛骨内側顆
+	"fifTH_MTAR", // 第5中足骨
+	"IL_CREST",   // 骨盤
 	"HEEL"	// かかと
 };
+
+cv::Scalar COLOR[] = {
+    cv::Scalar(0x71, 0xb3, 0x3c), // 大腿骨クラスタ
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x71, 0xb3, 0x3c),
+    cv::Scalar(0x00, 0xa5, 0xff), // 脛骨クラスタ
+    cv::Scalar(0x00, 0xa5, 0xff),
+    cv::Scalar(0x00, 0xa5, 0xff),
+    cv::Scalar(0x00, 0xa5, 0xff),
+    cv::Scalar(0x00, 0xa5, 0xff),
+    cv::Scalar(0x00, 0xa5, 0xff),
+    cv::Scalar(0xff, 0x00, 0x00), // 大転子
+    cv::Scalar(0xff, 0xbf, 0x00), // 大腿骨外側顆
+    cv::Scalar(0xff, 0xff, 0x00), // 大腿骨内側顆
+    cv::Scalar(0xe2, 0x2b, 0x8a), // 外側プラトー
+    cv::Scalar(0xd6, 0x70, 0xda), // 内側プラトー
+    cv::Scalar(0x00, 0x00, 0xff), // 脛骨外側顆
+    cv::Scalar(0x5c, 0x5c, 0xcd), // 脛骨内側顆
+    cv::Scalar(0xff, 0x00, 0xff), // 第5中足骨
+    cv::Scalar(0x66, 0x66, 0x66), // 骨盤?
+    cv::Scalar(0xb4, 0x69, 0xff), // かかと
+};
+
 
 void cvmouse(int event, int x, int y, int flags, void *param)
 {
@@ -43,7 +74,6 @@ void cvmouse(int event, int x, int y, int flags, void *param)
     {
     case CV_EVENT_LBUTTONDOWN:
         clickPos.x = x; clickPos.y = y;
-        cv::circle(*im, cv::Point(x, y), 5, cv::Scalar(0, 255, 0), -1);
         std::cout << "    " << x << ", " << y << std::endl;
         break;
     }
@@ -53,124 +83,9 @@ void initLabel(std::vector<cv::Point2f> &crrnt, std::vector<cv::Point2f> &prv)
 {
     for (int i = MARKER_IDX_NUM-1; i >= 0; i--)
     {
-        switch (i)
-        {
-		case FP1: // 大腿骨クラスタ
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FP2:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FP3:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FL1:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FL2:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FL3:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FA1:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FA2:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case FA3:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TL1: // 脛骨クラスタ
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TL2:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TL3:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TA1:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TA2:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case TA3:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;
-		case GRT_TROC:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;   // 大転子
-		case MED_CON:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;    // 上の真ん中の凸
-		case LAT_CON:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;    // 小転子
-		case LAT_MALL:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;   // 
-		case MED_MALL:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;   // 
-		case fifTH_MTAR:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;   // 
-		case IL_CREST:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;   // 
-		case HEEL:
-			std::cout << markerName[i] << std::endl;
-			cv::waitKey();
-			mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
-			break;       // かかと
-        }
+        std::cout << markerName[i] << std::endl;
+		cv::waitKey();
+		mrkr.setOneMarkerLabel(i, clickPos, crrnt, prv);
     }
 }
 
@@ -184,14 +99,14 @@ int main(int argc, char *argv[])
     {
         return -1;
     }
-    //capL.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-    //capL.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
-    //capR.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-    //capR.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
-    capL.set(CV_CAP_PROP_FRAME_WIDTH, 600);
-    capL.set(CV_CAP_PROP_FRAME_HEIGHT, 400);
-    capR.set(CV_CAP_PROP_FRAME_WIDTH, 600);
-    capR.set(CV_CAP_PROP_FRAME_HEIGHT, 400);
+    capL.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+    capL.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+    capR.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+    capR.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+    //capL.set(CV_CAP_PROP_FRAME_WIDTH, 600);
+    //capL.set(CV_CAP_PROP_FRAME_HEIGHT, 400);
+    //capR.set(CV_CAP_PROP_FRAME_WIDTH, 600);
+    //capR.set(CV_CAP_PROP_FRAME_HEIGHT, 400);
 
     Camera camL, camR; // Webカメラ
 
@@ -206,11 +121,13 @@ int main(int argc, char *argv[])
 
     // マーカのラベルの初期化
     // キャプチャ
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 20; i++)
     {
         capL >> frameLIm;
         capR >> frameRIm;
-        cv::waitKey(10);
+        cv::imshow("capL", frameLIm);
+        cv::imshow("capR", frameRIm);
+        cv::waitKey(1);
     }
 
     // キャリブレーション
@@ -244,24 +161,19 @@ int main(int argc, char *argv[])
         // マーカの検出
         mrkr.calcPos(camL, camR);
 
-        //for (size_t i = 0; i < mrkr.crrntPosL.size(); i++)
-        std::cout << "--" << std::endl;
-        for (size_t i = 0; i < 3; i++)
+        for (int i = 0; i < 25; i++)
         {
-            std::cout << mrkr.crrntPosL[mrkr.crrntPosL.size()-1-i].x << ", " << mrkr.crrntPosL[mrkr.crrntPosL.size()-1-i].y << std::endl;
+            cv::circle(camL.dstIm, mrkr.crrntPosL[i], 5, COLOR[i], -1);
+            cv::circle(camR.dstIm, mrkr.crrntPosR[i], 5, COLOR[i], -1);
         }
-        std::cout << std::endl;
-        cv::circle(camL.dstIm, mrkr.crrntPosL[mrkr.crrntPosL.size()-1], 5, cv::Scalar(255, 255, 0), -1);
-        cv::circle(camL.dstIm, mrkr.crrntPosL[mrkr.crrntPosL.size()-2], 5, cv::Scalar(0, 255, 0), -1);
-        cv::circle(camL.dstIm, mrkr.crrntPosL[mrkr.crrntPosL.size()-3], 5, cv::Scalar(0, 0, 255), -1);
-        cv::circle(camR.dstIm, mrkr.crrntPosR[mrkr.crrntPosR.size()-1], 5, cv::Scalar(255, 255, 0), -1);
-        cv::circle(camR.dstIm, mrkr.crrntPosR[mrkr.crrntPosR.size()-2], 5, cv::Scalar(0, 255, 0), -1);
-        cv::circle(camR.dstIm, mrkr.crrntPosR[mrkr.crrntPosR.size()-3], 5, cv::Scalar(0, 0, 255), -1);
+
+        std::cout << "pos" << std::endl;
+        std::cout << mrkr.crrntPos[0].x << ", " << mrkr.crrntPos[0].y << ", " << mrkr.crrntPos[0].z << std::endl;
 
         cv::imshow("capL", camL.dstIm);
         cv::imshow("capR", camR.dstIm);
 
-        char c = cv::waitKey();
+        char c = cv::waitKey(1);
         if (c == 'q')
         {
             break;

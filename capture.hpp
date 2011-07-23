@@ -22,11 +22,11 @@
  */
 namespace BUFFALO_BSW13K05H
 {
-    const float  DISTANCE = 10.0f;
+    const float  DISTANCE = 30.0f;
     const double ANGLE_OF_VIEW_H = 1.3962634015954636; // 水平方向の視野角．80度
     const double ANGLE_OFFSET_H = 0.87266462599716477; // 水平方向の視野外の角度．50度
     const double ANGLE_OF_VIEW_V = 1.0471975511965976; // 鉛直方向の視野角．60度
-    const double ANGLE_OFFSET_V = 1.0471975511965976; // 鉛直方向の視野外の角度．60度
+    const double ANGLE_OFFSET_V = -0.52359877559829882; // 鉛直方向の視野外の角度．-30度
 
     const double FOCUS_LEN_X = 610.67838569413459;
     const double FOCUS_LEN_Y = 612.43683758630948;
@@ -60,10 +60,12 @@ enum MARKER_IDX
     TA2,
     TA3,
     GRT_TROC,   // 大転子
-    MED_CON,    // 上の真ん中の凸
-    LAT_CON,    // 小転子
-    LAT_MALL,   // 
-    MED_MALL,   // 
+	MED_CON,	// 大腿骨内側顆
+	LAT_CON,	// 大腿骨外側顆
+	LAT_PLA,	// 外側プラトー
+	MED_PLA,	// 内側プラトー
+	LAT_MALL, // 脛骨外側顆
+	MED_MALL, // 脛骨内側顆
     fifTH_MTAR,   // 
     IL_CREST,   // 
     HEEL,       // かかと
@@ -135,7 +137,7 @@ public: // デバッグ
      */
     inline float pos2radH(int pos)
     {
-        return ((static_cast<float>(pos)/static_cast<float>(imRows)) * BUFFALO_BSW13K05H::ANGLE_OF_VIEW_H + BUFFALO_BSW13K05H::ANGLE_OFFSET_H);
+        return ((static_cast<float>(pos)/static_cast<float>(imCols)) * BUFFALO_BSW13K05H::ANGLE_OF_VIEW_H + BUFFALO_BSW13K05H::ANGLE_OFFSET_H);
     }
 
     /*!
@@ -146,7 +148,7 @@ public: // デバッグ
      */
     inline float pos2radV(int pos)
     {
-        return ((static_cast<float>(pos)/static_cast<float>(imCols)) * BUFFALO_BSW13K05H::ANGLE_OF_VIEW_V + BUFFALO_BSW13K05H::ANGLE_OFFSET_V);
+        return (1 - (static_cast<float>(pos)/static_cast<float>(imRows)) * BUFFALO_BSW13K05H::ANGLE_OF_VIEW_V + BUFFALO_BSW13K05H::ANGLE_OFFSET_V);
     }
 
     /*!

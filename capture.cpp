@@ -47,7 +47,7 @@ void Camera::setUndistortParam()
 Marker::Marker():
 baseLen(BUFFALO_BSW13K05H::DISTANCE)
 {
-    crrntPos.reserve(MARKER_IDX_NUM);
+    crrntPos.resize(MARKER_IDX_NUM);
     prvPos.resize(MARKER_IDX_NUM);
     crrntPosL.reserve(MARKER_IDX_NUM);
     prvPosL.resize(MARKER_IDX_NUM);
@@ -117,11 +117,11 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
 
     // ノイズ除去
     cv::Mat medianIm;
-    cv::medianBlur(grayIm, medianIm, 9);
+    cv::medianBlur(grayIm, medianIm, 3);
 
     // 閾値処理
     cv::Mat thIm;
-    cv::threshold(medianIm, thIm, 128, 255, cv::THRESH_BINARY);
+    cv::threshold(medianIm, thIm, 225, 255, cv::THRESH_BINARY);
 
     // マスク処理
     cv::Mat fusionIm;
@@ -131,7 +131,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
     cv::Mat lblIm = cv::Mat(thIm.size(), thIm.type());
     LabelingBS lblBS;
     short *dst = new short[thIm.rows * thIm.cols];
-    lblBS.Exec((uchar *)thIm.data, dst, thIm.cols, thIm.rows, false, 1000000);
+    lblBS.Exec((uchar *)thIm.data, dst, thIm.cols, thIm.rows, false, 10);
     
     for (int i = 0; i < thIm.rows*thIm.cols; i++)
     {
@@ -154,7 +154,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
         cv::Point2f c;
         RegionInfoBS *ri = lblBS.GetResultRegionInfo(i);
 
-        if (ri->GetNumOfPixels() < 103)
+        if (ri->GetNumOfPixels() > 103)
         {
             continue;
         }
@@ -162,7 +162,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
         ri->GetCenterOfGravity(c.x, c.y);
         pos.push_back(c);
 
-        cv::circle(centerIm, c, 5, cv::Scalar(255, 0, 0), -1);
+        cv::circle(centerIm, c, 5, cv::Scalar(255, 255, 255), -1);
     }
 
     centerIm.copyTo(dstIm);
@@ -194,9 +194,15 @@ void Marker::getPos3D()
 {
     std::cout << "getPos3D" << std::endl;
 
+    std::cout << "POS: ";
     std::cout << crrntPosL[0].x << ", " << crrntPosL[0].y << " - " << crrntPosR[0].x << ", " << crrntPosR[0].y << std::endl;
-    std::cout << rad2deg(pos2radH(crrntPosL[crrntPosL.size()-1].x)) << ", " << rad2deg(pos2radV(crrntPosL[crrntPosL.size()-1].y)) << std::endl;
+    std::cout << "ANG: ";
+    std::cout << rad2deg(M_PI-pos2radH(crrntPosL[0].x)) << ", " << rad2deg(pos2radV(crrntPosL[0].y)) << " - " << rad2deg(pos2radH(crrntPosR[0].x)) << ", " << rad2deg(pos2radV(crrntPosR[0].y)) << std::endl;
 
+    for (size_t i = 0; i < crrntPos.size(); i++)
+    {
+        crrntPos[i] = triangulation(M_PI-pos2radH(crrntPosL[i].x), pos2radV(crrntPosL[i].y), pos2radH(crrntPosR[i].x));
+    }
 }
 
 /*!
@@ -239,9 +245,18 @@ cv::Vec3f Marker::triangulation(float angLh, float angLv, float angRh)
     float angCv = M_PI_2 - angLv;
     float sdAC = (sin(angRh)/sin(angCh)) * baseLen;
 
-    float Xc = sdAC * sin(angLh);
-    float Zc = sdAC * cos(angLh);
+    float Xc = sdAC * cos(angLh);
+    float Zc = sdAC * sin(angLh);
     float Yc = (sin(angLv)/sin(angCv)) * Zc;
+
+    //std::cout << "----" << std::endl;
+    //std::cout << "angLh = " << rad2deg(angLh) << std::endl;
+    //std::cout << "angLv = " << rad2deg(angLv) << std::endl;
+    //std::cout << "angRh = " << rad2deg(angRh) << std::endl;
+    //std::cout << "angCh = " << rad2deg(angCh) << std::endl;
+    //std::cout << "angCv = " << rad2deg(angCv) << std::endl;
+
+    //std::cout << "sdAC  = " << sdAC << std::endl;
 
     return cv::Vec3f(Xc, Yc, Zc);
 }
