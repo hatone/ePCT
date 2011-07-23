@@ -227,6 +227,11 @@ void Marker::setMarkerLabel(std::vector<cv::Point2f> &prv, std::vector<cv::Point
         }
         pos[i] = crrnt[idx];
     }
+
+    // ‰B‚ê‚Ä‚µ‚Ü‚Á‚Ä‚à’ú‚ß‚È‚¢
+
+
+
     crrnt = pos;
     prv = crrnt;
 
