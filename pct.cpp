@@ -111,36 +111,36 @@ void Cluster::createLocalCoordinates(std::vector<CPPL::dcovector> &vr)
 void Cluster::pct()
 {
     //ここに処理書く
-    std::cout<<"PCT"<<std::endl;
+//    std::cout<<"PCT"<<std::endl;
     
     //質量重心算出
     weightFactor();
-    std::cout << "C(t): " << std::endl;
-    std::cout << wFact << std::endl;
+//    std::cout << "C(t): " << std::endl;
+//    std::cout << wFact << std::endl;
     
     //慣性テンソル行列生成
     createP();
-    std::cout << "P = " << std::endl;
-    displayP();
+//    std::cout << "P = " << std::endl;
+//    displayP();
     
     createTensor();
-    std::cout << "I:" << std::endl;
-    std::cout << I << std::endl;
+//    std::cout << "I:" << std::endl;
+//    std::cout << I << std::endl;
     
     //慣性テンソル行列の固有と算出
     
     I.dgeev(wr,wi,vr,vi);  //いでよ固有値！固有ベクトル！！
     
     //表示系
-    for(int i=0; i<3; i++){
-        std::cout << "#### " << i << "th eigen ####" << std::endl;
-        std::cout << "wr=" << wr[i] << std::endl;
-        std::cout << "vr=\n" << vr[i] << std::endl;
-    }
+//    for(int i=0; i<3; i++){
+//        std::cout << "#### " << i << "th eigen ####" << std::endl;
+//        std::cout << "wr=" << wr[i] << std::endl;
+//        std::cout << "vr=\n" << vr[i] << std::endl;
+//    }
     
     createLocalCoordinates(vr);
     
-    std::cout << "Local Coordinate -- " << std::endl;
+//    std::cout << "Local Coordinate" << std::endl;
     for (size_t i = 0; i < L.m_coordinates.size(); i++)
     {
 //        printf("glVertex3d( %f, %f, %f);\n", L.m_coordinates[i](0),  L.m_coordinates[i](1),  L.m_coordinates[i](2));
@@ -217,10 +217,10 @@ void Cluster::redistributionMass(Cluster &C)
         for(size_t j=0; j<3; j++)
         {
             dst+=abs( vr[j](0)*G.m_coordinates[i](0) +vr[j](1)*G.m_coordinates[i](1)+vr[j](2)*G.m_coordinates[i](2) ) / 
-            sqrt(G.m_coordinates[i](0)*G.m_coordinates[i](0)+G.m_coordinates[i](1)*G.m_coordinates[i](1)+G.m_coordinates[i](2)*G.m_coordinates[i](2));
+            sqrt(G.m_coordinates[i](0)*G.m_coordinates[i](0) + G.m_coordinates[i](1)*G.m_coordinates[i](1) + G.m_coordinates[i](2)*G.m_coordinates[i](2));
         }
         
-         std::cout<<"s dst"<<i<<" "<<dst<<std::endl;
+//        std::cout<<"s dst"<<i<<" "<<dst<<std::endl;
         
         int idx= -1;
         for(size_t j=0; j<pv.size(); j++)
@@ -254,55 +254,117 @@ void Cluster::redistributionMass(Cluster &C)
     
 }
 
+double getAngle(double s0, double s1, double f0, double f1, double t0, double t1)//2次元
+{
+    CPPL::dcovector B(2);
+    B(0)= s0;
+    B(1)= s1;
+    
+    
+    CPPL::dcovector BA(2);
+    BA(0)=f0;//3
+    BA(1)=f1;//4
+
+    BA -= B;
+
+    CPPL::dcovector BC(2);
+    BC(0)=t0;//2
+    BC(1)=t1;//6
+    
+    BC -= B;
+        
+    double n1 =0.0,n2 =0.0; 
+    n1= BA(0)*BC(0)+BA(1)*BC(1);
+    n2= sqrt( BA(0)*BA(0) + BA(1)*BA(1) )* sqrt( BC(0)*BC(0) + BC(1)*BC(1));
+
+  
+    return acos( (n1/n2) )* 180.0 / PI;
+}
+
 void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle,CPPL::dcovector &dist)
 {   
     //初期化
-    CPPL::dcovector Fdist(3);
-    CPPL::dcovector Tdist(3);
+//    CPPL::dcovector Fdist(3);
+//    CPPL::dcovector Tdist(3);
     
     //軸を算出
-    for (int i = 0; i < 12; i++)
-    {
-        std::cout << MARKER_NAME_F[i] << std::endl;
-        std::cout << F.L.m_coordinates[i] << std::endl;
-    }
+//    for (int i = 0; i < 12; i++)
+//    {
+//        std::cout << MARKER_NAME_F[i] << std::endl;
+//        std::cout << F.L.m_coordinates[i] << std::endl;
+//    }
+    
     F.createFAxsis();
-    for (int i = 0; i < 11; i++)
-    {
-        std::cout << MARKER_NAME_T[i] << std::endl;
-        std::cout << T.L.m_coordinates[i] << std::endl;
-    }
+    
+//    for (int i = 0; i < 11; i++)
+//    {
+//        std::cout << MARKER_NAME_T[i] << std::endl;
+//        std::cout << T.L.m_coordinates[i] << std::endl;
+//    }
+    
     T.createTAxsis();
+    
+    
+//    std::cout << "T.axis[0]'" << std::endl;
+//    std::cout << T.axis[0] << std::endl;
+//    std::cout << "T.axis[1]'" << std::endl;
+//    std::cout << T.axis[1] << std::endl;    
+    
+    dist = F.axis[0]-T.axis[0];
+    
+    T.axis[0]+=dist;
+    T.axis[1]+=dist;
+    
+    angle(0)=getAngle(F.axis[0](1), F.axis[0](2), F.axis[1](1), F.axis[1](2), T.axis[1](1), T.axis[1](2))-180;
+    angle(1)=getAngle(F.axis[0](0), F.axis[0](2), F.axis[1](0), F.axis[1](2), T.axis[1](0), T.axis[1](2))-180;
+    angle(2)=getAngle(F.axis[0](0), F.axis[0](1), F.axis[1](0), F.axis[1](1), T.axis[1](0), T.axis[1](1));
+    
 
-    std::cout<<"F(0)"<<F.axis[0]<< std::endl;
-    for(size_t i=0; i<3; i++)
-    {
-        dist(i)=sqrt( (F.axis[0](i)-T.axis[0](i)) * (F.axis[0](i)-T.axis[0](i)) );
-    }
-    
-    F.axis[0](0) = F.axis[0](1) = F.axis[0](2) = 0.0;
-    F.axis[1](0) = 0.0;
-    F.axis[1](1) = 1.0;
-    F.axis[1](2) = 0.0;
-   
-    T.axis[0](0) = T.axis[0](1) = T.axis[0](2) = 0.0;
-    T.axis[1](0) = 1.0;
-    T.axis[1](1) = 0.0;
-    T.axis[1](2) = 0.0;
     
     
-    //原点へ。軸の始点と終点をずらす
-    F.axis[1] -= F.axis[0];
-    T.axis[1] -= T.axis[0];
+//    F.axis[0](0) = F.axis[0](1) = F.axis[0](2) = 0.0;
+//    F.axis[1](0) = 0.0;
+//    F.axis[1](1) = 1.0;
+//    F.axis[1](2) = 0.0;
+//   
+//    T.axis[0](0) = T.axis[0](1) = T.axis[0](2) = 0.0;
+//    T.axis[1](0) = 1.0;
+//    T.axis[1](1) = 0.0;
+//    T.axis[1](2) = 0.0;
     
-    //軸の距離を求める&&角度を求める
-    for(size_t i=0; i<3; i++)
-    {
-        Fdist(i)= sqrt(F.axis[1](i)*F.axis[1](i));
-        Tdist(i)= sqrt(T.axis[1](i)*T.axis[1](i));
+    
+//    //原点へ。軸の始点と終点をずらす
+//    F.axis[1] -= F.axis[0];
+//    T.axis[1] -= T.axis[0];
+    
+    std::cout << "********************" << std::endl;
+//    std::cout << "dist" << std::endl;
+//    std::cout << dist << std::endl;
+//    
+//    std::cout << "F.axis[0]" << std::endl;
+//    std::cout << F.axis[0] << std::endl;
+//    std::cout << "F.axis[1]" << std::endl;
+//    std::cout << F.axis[1] << std::endl;
+//    std::cout << "T.axis[0]" << std::endl;
+//    std::cout << T.axis[0] << std::endl;
+//    std::cout << "T.axis[1]" << std::endl;
+//    std::cout << T.axis[1] << std::endl;
+//    
+    
+//    std::cout << "dist" << std::endl;
+//    std::cout << dist << std::endl;
+//    
 
-        angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
-    }
+
+
+//    //軸の距離を求める&&角度を求める
+//    for(size_t i=0; i<3; i++)
+//    {
+//        Fdist(i)= sqrt(F.axis[1](i)*F.axis[1](i));
+//        Tdist(i)= sqrt(T.axis[1](i)*T.axis[1](i));
+//
+//        angle(i)=acos(Fdist(i)/Tdist(i))* 180.0 / PI;
+//    }
     
     
 }
@@ -310,7 +372,7 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle,CPPL::dcovector &di
 
 void Cluster::createFAxsis()
 {
-    std::cout << "createFAxis" << std::endl;
+//    std::cout << "createFAxis" << std::endl;
     
     CPPL::dcovector vMid(3);
     CPPL::dcovector vS(3);
@@ -323,18 +385,17 @@ void Cluster::createFAxsis()
     vX=L.m_coordinates[MED_CON];
     vY=L.m_coordinates[GRT_TROC];
 
-    std::cout << "posS = " << std::endl;
-    std::cout << vS << std::endl;
+
     vX -= vS;
     vY -= vS;
     vZ = cross(vX, vY);
     
-    std::cout << "vecX = " << std::endl;
-    std::cout << vX<< std::endl;
-    std::cout << "vecY = " << std::endl;
-    std::cout << vY<< std::endl;
-    std::cout << "vecZ = " << std::endl;
-    std::cout << vZ << std::endl;
+//    std::cout << "vecX = " << std::endl;
+//    std::cout << vX<< std::endl;
+//    std::cout << "vecY = " << std::endl;
+//    std::cout << vY<< std::endl;
+//    std::cout << "vecZ = " << std::endl;
+//    std::cout << vZ << std::endl;
     
     vX = cross(vZ,vY);
 
@@ -343,6 +404,9 @@ void Cluster::createFAxsis()
     vX -= vMid;
     vY -= vMid;
     vZ -= vMid;
+    
+//    std::cout << "posS = " << std::endl;
+//    std::cout << vS << std::endl;
     
     axis[0]=vS;
     axis[1]=vX+vY+vZ;
@@ -363,7 +427,7 @@ void Cluster::createFAxsis()
 
 void Cluster::createTAxsis()
 {
-        std::cout << "createTAxis" << std::endl;
+//    std::cout << "createTAxis" << std::endl;
     CPPL::dcovector vMid(3);
     CPPL::dcovector vMid2(3);
     CPPL::dcovector vS(3);
@@ -372,13 +436,15 @@ void Cluster::createTAxsis()
     CPPL::dcovector vZ(3);
     
     vMid=(L.m_coordinates[MED_MALL]+L.m_coordinates[LAT_MALL])/2.0;
-    vMid2=vMid;
-    
-    vMid2(1) = vY(1);
     
     vS=L.m_coordinates[LAT_MALL];
     vX=L.m_coordinates[MED_MALL];
-    vY=L.m_coordinates[TA1];
+    vY=L.m_coordinates[TA3];
+   
+    
+    vMid2=vMid;
+    vMid2(1) = L.m_coordinates[TA1](1);
+    
     
     vY -= vS;
     vZ = cross(vX, vY);

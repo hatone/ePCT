@@ -165,13 +165,42 @@ void motionCaputure(GrCoord &mrkrF, GrCoord &mrkrT)
 
 int main(int argc, char *argv[])
 {
+    
+    
 	Cluster k_f,k_t;
     Cluster f, t;
+
+    angle.zero();
+    dist.zero();
     
+    //一回保存
+    motionCaputure(f.G, t.G);
+    f.pct();
+	t.pct();
+    calcAxsis(f, t, angle, dist);
+    
+    std::cout<<"angle"<<std::endl; 
+    std::cout<<angle<<std::endl;
+    std::cout<<"dist"<<std::endl; 
+    std::cout<<dist<<std::endl; 
+    
+    //とりあえず今だけ。1回だけ実行したい。
+    k_f = f;
+    k_t = t;
+    
+    f.redistributionMass(k_f);
+    t.redistributionMass(k_t);
+
+    
+    for(size_t i; i<3; i++)
+    {
+        
+
+        
 	motionCaputure(f.G, t.G);
 
-    display(f.G);
-    display(t.G);
+//    display(f.G);
+//    display(t.G);
 
 
     f.pct();
@@ -181,13 +210,11 @@ int main(int argc, char *argv[])
     
     
     calcAxsis(f, t, angle, dist);
-    std::cout<<angle<<std::endl; 
-    printf("%lf\n", angle(1));
-  
-    //とりあえず今だけ。1回だけ実行したい。
-    k_f = f;
-    k_t = t;
     
+    std::cout<<"angle"<<std::endl; 
+    std::cout<<angle<<std::endl;
+    std::cout<<"dist"<<std::endl; 
+    std::cout<<dist<<std::endl; 
     
         
     f.redistributionMass(k_f);
@@ -195,5 +222,7 @@ int main(int argc, char *argv[])
     
     //   display(f, t);
     //   
+        
+    }
     return 0;
 }
