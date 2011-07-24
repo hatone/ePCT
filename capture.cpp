@@ -2,6 +2,34 @@
 
 #include "capture.hpp"
 
+char *MARKER_NAME[] = {
+    "FP1",
+    "FP2",
+    "FP3",
+    "FL1",
+    "FL2",
+    "FL3",
+    "FA1",
+    "FA2",
+    "FA3",
+    "TL1",    // 脛骨クラスタ
+    "TL2",
+    "TL3",
+    "TA1",
+    "TA2",
+    "TA3",
+    "GRT_TROC",   // 大転子
+    "MED_CON",    // 大腿骨内側顆
+    "LAT_CON",    // 大腿骨外側顆
+    "LAT_PLA",    // 外側プラトー
+    "MED_PLA",    // 内側プラトー
+    "LAT_MALL", // 脛骨外側顆
+    "MED_MALL", // 脛骨内側顆
+    "fifTH_MTAR",   // 
+    "IL_CREST",   // 
+    "HEEL"       // かかと
+};
+
 /*!
  *
  */
@@ -117,7 +145,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
 
     // ノイズ除去
     cv::Mat medianIm;
-    cv::medianBlur(grayIm, medianIm, 3);
+    cv::medianBlur(grayIm, medianIm, 5);
 
     // 閾値処理
     cv::Mat thIm;
@@ -154,7 +182,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
         cv::Point2f c;
         RegionInfoBS *ri = lblBS.GetResultRegionInfo(i);
 
-        if (ri->GetNumOfPixels() > 103)
+        if (100 > ri->GetNumOfPixels() || ri->GetNumOfPixels() > 500)
         {
             continue;
         }
@@ -162,7 +190,7 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
         ri->GetCenterOfGravity(c.x, c.y);
         pos.push_back(c);
 
-        cv::circle(centerIm, c, 5, cv::Scalar(255, 255, 255), -1);
+        cv::circle(centerIm, c, 5, cv::Scalar(64, 63, 62), -1);
     }
 
     centerIm.copyTo(dstIm);
@@ -192,16 +220,22 @@ void Marker::getPos2D(cv::Mat &srcIm, cv::Mat &dstIm, std::vector<cv::Point2f> &
  */
 void Marker::getPos3D()
 {
+    system("cls");
     std::cout << "getPos3D" << std::endl;
 
-    std::cout << "POS: ";
+    std::cout << "POS2D: ";
     std::cout << crrntPosL[0].x << ", " << crrntPosL[0].y << " - " << crrntPosR[0].x << ", " << crrntPosR[0].y << std::endl;
-    std::cout << "ANG: ";
+    std::cout << "ANG2D: ";
     std::cout << rad2deg(M_PI-pos2radH(crrntPosL[0].x)) << ", " << rad2deg(pos2radV(crrntPosL[0].y)) << " - " << rad2deg(pos2radH(crrntPosR[0].x)) << ", " << rad2deg(pos2radV(crrntPosR[0].y)) << std::endl;
 
     for (size_t i = 0; i < crrntPos.size(); i++)
     {
         crrntPos[i] = triangulation(M_PI-pos2radH(crrntPosL[i].x), pos2radV(crrntPosL[i].y), pos2radH(crrntPosR[i].x));
+    }
+
+    for (size_t i = 0; i < crrntPos.size(); i++)
+    {
+        std::cout << MARKER_NAME[i] << ": " << crrntPos[0].x << ", " << crrntPos[0].y << ", " << crrntPos[0].z << std::endl;
     }
 }
 
@@ -264,9 +298,4 @@ cv::Vec3f Marker::triangulation(float angLh, float angLv, float angRh)
     //std::cout << "sdAC  = " << sdAC << std::endl;
 
     return cv::Vec3f(Xc, Yc, Zc);
-}
-
-MARKER_IDX getMarkerIdx(cv::Point2i pos)
-{
-
 }

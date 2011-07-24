@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     // カメラ画像
     //cv::VideoCapture capL(0), capR(0);
     //cv::VideoCapture capL(1), capR(1);
-    cv::VideoCapture capL(1), capR(2);
+    cv::VideoCapture capL(2), capR(1);
     if (!capL.isOpened())
     {
         return -1;
@@ -166,9 +166,6 @@ int main(int argc, char *argv[])
             cv::circle(camL.dstIm, mrkr.crrntPosL[i], 5, COLOR[i], -1);
             cv::circle(camR.dstIm, mrkr.crrntPosR[i], 5, COLOR[i], -1);
         }
-
-        std::cout << "pos" << std::endl;
-        std::cout << mrkr.crrntPos[0].x << ", " << mrkr.crrntPos[0].y << ", " << mrkr.crrntPos[0].z << std::endl;
 
         cv::imshow("capL", camL.dstIm);
         cv::imshow("capR", camR.dstIm);

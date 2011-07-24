@@ -72,6 +72,7 @@ enum MARKER_IDX
     MARKER_IDX_NUM // マーカの数
 };
 
+
 /*!
  *  \class Camera
  *  \brief カメラ
