@@ -73,6 +73,7 @@ Cluster::Cluster()
     I.resize(3, 3);
     I.zero();
     
+    
     pos.resize(3);
     pos.zero();
     cm.resize(3);
@@ -171,10 +172,14 @@ void Cluster::weightFactor()
  */
 void Cluster::createP()
 {
-    P.reserve(G.m_coordinates.size());
+  
+    P.clear();
+    P.resize(G.m_coordinates.size());
+  
+    
     for (size_t i = 0; i< G.m_coordinates.size(); i++)
     {
-        P.push_back(G.m_coordinates[i] + wFact*(-1));
+        P[i]=(G.m_coordinates[i] + wFact*(-1));
     }
 }
 
@@ -216,7 +221,7 @@ void Cluster::redistributionMass(Cluster &C)
         
         for(size_t j=0; j<3; j++)
         {
-            dst+=abs( vr[j](0)*G.m_coordinates[i](0) +vr[j](1)*G.m_coordinates[i](1)+vr[j](2)*G.m_coordinates[i](2) ) / 
+            dst+=abs( vr[j](0)*G.m_coordinates[i](0) + vr[j](1)*G.m_coordinates[i](1) + vr[j](2)*G.m_coordinates[i](2) ) / 
             sqrt(G.m_coordinates[i](0)*G.m_coordinates[i](0) + G.m_coordinates[i](1)*G.m_coordinates[i](1) + G.m_coordinates[i](2)*G.m_coordinates[i](2));
         }
         
@@ -317,7 +322,7 @@ void calcAxsis(Cluster &F,Cluster &T, CPPL::dcovector &angle,CPPL::dcovector &di
     
     angle(0)=getAngle(F.axis[0](1), F.axis[0](2), F.axis[1](1), F.axis[1](2), T.axis[1](1), T.axis[1](2))-180;
     angle(1)=getAngle(F.axis[0](0), F.axis[0](2), F.axis[1](0), F.axis[1](2), T.axis[1](0), T.axis[1](2))-180;
-    angle(2)=getAngle(F.axis[0](0), F.axis[0](1), F.axis[1](0), F.axis[1](1), T.axis[1](0), T.axis[1](1));
+    angle(2)=getAngle(F.axis[0](0), F.axis[0](1), F.axis[1](0), F.axis[1](1), T.axis[1](0), T.axis[1](1))-180;
     
 
     

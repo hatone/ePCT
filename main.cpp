@@ -175,29 +175,30 @@ int main(int argc, char *argv[])
     
     //一回保存
     motionCaputure(f.G, t.G);
-    f.pct();
-	t.pct();
-    calcAxsis(f, t, angle, dist);
+ //   f.pct();
+//	t.pct();
+//    calcAxsis(f, t, angle, dist);
+//    
+//    std::cout<<"angle"<<std::endl; 
+//    std::cout<<angle<<std::endl;
+//    std::cout<<"dist"<<std::endl; 
+//    std::cout<<dist<<std::endl; 
+//    
+//    //とりあえず今だけ。1回だけ実行したい。
+//    k_f = f;
+//    k_t = t;
+//    
+////    f.redistributionMass(k_f);
+////    t.redistributionMass(k_t);
+//
     
-    std::cout<<"angle"<<std::endl; 
-    std::cout<<angle<<std::endl;
-    std::cout<<"dist"<<std::endl; 
-    std::cout<<dist<<std::endl; 
-    
-    //とりあえず今だけ。1回だけ実行したい。
-    k_f = f;
-    k_t = t;
-    
-    f.redistributionMass(k_f);
-    t.redistributionMass(k_t);
-
-    
-    for(size_t i; i<3; i++)
+    for(size_t i=0; i<3; i++)
     {
         
-
+        angle.zero();
+        dist.zero();
         
-	motionCaputure(f.G, t.G);
+//motionCaputure(f.G, t.G);
 
 //    display(f.G);
 //    display(t.G);
@@ -217,8 +218,8 @@ int main(int argc, char *argv[])
     std::cout<<dist<<std::endl; 
     
         
-    f.redistributionMass(k_f);
-    t.redistributionMass(k_t);
+    //f.redistributionMass(k_f);
+    //t.redistributionMass(k_t);
     
     //   display(f, t);
     //   
